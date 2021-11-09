@@ -1,6 +1,6 @@
 - 👋 Hi, I’m Rishi
-- 👀 I’m interested in Programming
-- 🌱 I’m currently learning Java and Web Development
+- 👀 I’m interested in Programming and Softwares
+- 🌱 I’m currently learning Java and Web Development and more
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me ...
 
