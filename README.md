@@ -30,7 +30,7 @@
 - Tools
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=git,github,vscode,postman,linux" />
+    <img src="https://skillicons.dev/icons?i=git,github,vscode,postman,linux,ts" />
   </a>
 </p>
 <h3>Connect with me:</h3>
