@@ -5,10 +5,11 @@
 <img src="https://komarev.com/ghpvc/?username=RishiAP&style=flat-square&color=blue" alt=""/>
 </div>
 <h3 align="left">Languages and Tools:</h3>
+
 - Languages
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=java" />
+    <img src="https://skillicons.dev/icons?i=java,c,python" />
   </a>
 </p>
 
