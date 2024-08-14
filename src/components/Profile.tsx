@@ -73,8 +73,8 @@ const Profile = () => {
               <Image
                 src="/My_Pic.jpg" // Path to your image
                 alt="Debjyoti Mondal"
-                layout="fill" // Make image fill container
-                objectFit="cover" // Cover the container
+                fill
+                style={{objectFit: 'cover'}}
               />
             </ImageContainer>
           </Grid>

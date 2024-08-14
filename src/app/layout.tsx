@@ -7,6 +7,8 @@ import Theme from "@/theme";
 export const metadata: Metadata = {
   title: "Debjyoti Mondal - Portfolio",
   description: "Hi there! I'm Debjyoti Mondal, a Full Stack Developer. I love to build web applications using modern technologies.",
+  robots:"index, follow",
+  icons: ["./favicon.png"],
 };
 
 export default function RootLayout({
