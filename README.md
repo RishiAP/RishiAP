@@ -1,5 +1,6 @@
 <div align=center>
 <h1>Hi 👋, I am Debjyoti Mondal</h1>
+<p>A full stack developer who loves developing new and effecient applications and provides optimised solutions</p>
 </div>
 <div align=center>
 <img src="https://komarev.com/ghpvc/?username=RishiAP&style=flat-square&color=blue" alt=""/>
