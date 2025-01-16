@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align=center>
+<h1>Hi 👋, I am Debjyoti Mondal</h1>
+<p>A full stack developer who loves developing new and effecient applications and provides optimised solutions</p>
+</div>
+<div align=center>
+<img src="https://komarev.com/ghpvc/?username=RishiAP&style=flat-square&color=blue" alt=""/>
+</div>
+<h3 align="left">Languages and Tools:</h3>
 
-## Getting Started
+- Languages
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=java,c,python" />
+  </a>
+</p>
 
-First, run the development server:
+- Backend
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=php,nodejs,express,nextjs" />
+  </a>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Frontend
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=js,bootstrap,react,nextjs,tailwind" />
+  </a>
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Database
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=mongodb,mysql,postgres,graphql" />
+  </a>
+</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Tools
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=git,github,vscode,postman,linux,ts" />
+  </a>
+</p>
+<h3>Connect with me:</h3>
+<div id="badges" align=center>
+  <a href="https://linkedin.com/in/rishi-the-programmer/" target="_blank">
+    <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+  <a href="https://instagram.com/rishi_the_programmer/" target="_blank">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Twitter Badge"/>
+  </a>
+  <a href="https://twitter.com/RishiProgrammer/" target="_blank">
+    <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
+  </a>
+</div>
+<h3 align="left">GitHub Stats:</h3>
+<div align="center">
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![RishiAP's Most Used Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=RishiAP&layout=compact\&theme=chartreuse-dark\&show_icons=true)
+ 
+![RishiAP's GitHub stats](https://github-readme-stats.vercel.app/api?username=RishiAP\&theme=chartreuse-dark\&show_icons=true\&show=reviews,prs_merged,prs_merged_percentage\&hide=contribs,issues)
 
-## Learn More
+[![GitHub Streak](https://streak-stats.demolab.com/?user=RishiAP&theme=chartreuse-dark)](https://git.io/streak-stats)
 
-To learn more about Next.js, take a look at the following resources:
+</div>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<h3 align="left">Activity:</h3>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![RishiAP's Graph](https://github-readme-activity-graph.vercel.app/graph?username=RishiAP&custom_title=Debjyoti's%20GitHub%20Activity%20Graph&bg_color=0D1117&color=7fff00&line=7fff00&point=7fff00&area_color=FFFFFF&title_color=FFFFFF&area=true)
+<br><br>
