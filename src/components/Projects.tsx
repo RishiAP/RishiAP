@@ -27,7 +27,13 @@ export function Projects() {
 
     fetchProjects();
   }, []);
-
+  function formatDate(date: Date): string {
+    const day = date.getDate(); // Get the day as a number
+    const month = date.toLocaleString('en-US', { month: 'short' }); // Get abbreviated month name
+    const year = date.getFullYear(); // Get the full year
+  
+    return `${day} ${month} ${year}`;
+  }
   return (
     <section id="projects" className="container py-24 space-y-8">
       <div className="text-center space-y-4">
@@ -40,7 +46,7 @@ export function Projects() {
       ) : (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
-            <Card key={project.id} className="flex flex-col justify-between group hover:shadow-lg transition-all">
+            <Card key={project.id} className="flex flex-col justify-between group hover:shadow-lg transition-all md:mx-0 mx-4">
               <CardContent className="p-0 relative w-full" style={{ aspectRatio: "16/9" }}>
                 <Image
                   src={`https://opengraph.githubassets.com/1/${project.full_name}`}
@@ -73,7 +79,7 @@ export function Projects() {
                 <div className="flex flex-wrap gap-2">
                 <Badge variant="outline">{project.stargazers_count} Stars</Badge>
                 <Badge variant="outline">{project.forks_count} Forks</Badge>
-                <Badge variant="outline">Updated {new Date(project.updated_at).toLocaleDateString()}</Badge>
+                <Badge variant="outline">Updated : {formatDate(new Date(project.updated_at))}</Badge>
                 </div>
                 <a href={project.html_url} className="w-full" target="_blank">
                 <Button
