@@ -1,9 +1,24 @@
 import axios from "axios";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Project, LanguageUsage } from "@/types/commonTypes";
+// Get the allowed origins from the environment variable
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',');
 
-export async function GET() {
+export const runtime = 'edge'; // Edge function for better performance
+
+export async function GET(req:NextRequest) {
   try {
+    const origin = req.headers.get('origin') || req.nextUrl.origin;
+
+    // Determine if the origin is allowed
+    const isAllowedOrigin = allowedOrigins?.includes(origin) || origin === req.nextUrl.origin;
+    if (!isAllowedOrigin) {
+      return NextResponse.json(
+        { error: "Unauthorized origin" },
+        { status: 403 }
+      );
+    }
+
     const token = process.env.GITHUB_TOKEN;
 
     // Validate if the token is provided
@@ -79,7 +94,9 @@ export async function GET() {
       };
     });
 
-    return NextResponse.json(projectsWithLanguages, { status: 200 });
+    const response=NextResponse.json(projectsWithLanguages, { status: 200 });
+    response.headers.set('Access-Control-Allow-Origin', origin);
+    return response;
   } catch (error) {
     console.error("Error fetching GitHub data:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
