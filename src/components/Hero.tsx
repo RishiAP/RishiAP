@@ -9,7 +9,7 @@ export function Hero() {
     <section id="intro" className="container space-y-8 md:py-32">
       <div className="flex flex-col-reverse md:flex-row items-center text-center md:text-left space-y-8 md:space-y-0">
         {/* Left Side - Text */}
-        <div className="space-y-4 md:w-1/2">
+        <div className="space-y-4 md:w-1/2 px-4">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
           <Typewriter words={["Hello there!", "I'm Debjyoti", 'A Full Stack Developer', "My strengths are","Java","JavaScript/Typescript","Next.js","Feel free to ask anything—I'm here to help!"]} loop={true} cursor={true} cursorStyle='|' typeSpeed={50} deleteSpeed={20} delaySpeed={1000} />
           </h1>
