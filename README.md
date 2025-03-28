@@ -58,9 +58,9 @@
 
 ![RishiAP's Most Used Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=RishiAP&layout=compact\&theme=chartreuse-dark\&show_icons=true)
  
-![RishiAP's GitHub stats](https://github-readme-stats.vercel.app/api?username=RishiAP\&theme=chartreuse-dark\&show_icons=true\&show=reviews,prs_merged,prs_merged_percentage\&hide=contribs,issues)
+![RishiAP's GitHub Stats](https://github-readme-stats.vercel.app/api?username=RishiAP\&theme=chartreuse-dark\&show_icons=true\&show=reviews,prs_merged,prs_merged_percentage\&hide=contribs,issues)
 
-[![GitHub Streak](https://streak-stats.demolab.com/?user=RishiAP&theme=chartreuse-dark)](https://git.io/streak-stats)
+[![RishiAP's GitHub Streak](https://streak-stats.demolab.com/?user=RishiAP&theme=chartreuse-dark)](https://git.io/streak-stats)
 
 </div>
 
