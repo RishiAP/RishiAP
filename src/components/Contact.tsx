@@ -30,7 +30,7 @@ export function Contact() {
     {
       icon: FaFileAlt,
       label: "Resume",
-      href: "/Debjyoti_Resume.pdf",
+      href: "https://rishiap.github.io/resume/resume.pdf",
       ariaLabel: "Download my resume",
     },
   ];

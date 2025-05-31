@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { Typewriter } from 'react-simple-typewriter'
 
@@ -24,15 +23,17 @@ export function Hero() {
               <span className="ml-2 opacity-70 group-hover:opacity-100 transition-opacity">→</span>
             </Button>
             </Link>
-            <a href="./Debjyoti_Resume.pdf" download><Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" asChild>
+            <Link href="https://rishiap.github.io/resume/resume.pdf" target="_blank" download>
               Download CV
-            </Button></a>
+              </Link>
+            </Button>
           </div>
         </div>
 
         {/* Right Side - Avatar */}
         <div className="md:w-1/2 flex justify-center">
-        <Image 
+        <img 
   src="/MyPic.png" 
   width={300} // Replace with your desired width in pixels
   height={300} // Replace with your desired height in pixels

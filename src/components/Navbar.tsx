@@ -9,7 +9,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { FaBars, FaTimes } from "react-icons/fa";
-import Image from "next/image";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +22,7 @@ export function Navbar() {
       <div className="container flex h-16 items-center justify-between m-auto px-4">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-          <Image src="/RishiLogo.png" alt="Logo" width={48} height={48} />
+          <img src="/RishiLogo.png" alt="Logo" width={48} height={48} />
         </Link>
 
         {/* Hamburger Menu for Mobile */}

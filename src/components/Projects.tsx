@@ -4,7 +4,6 @@ import axios from "axios";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
 
 import { Project } from "@/types/commonTypes";
 
@@ -14,7 +13,7 @@ export function Projects() {
 
   useEffect(() => {
     const fetchProjects = async (): Promise<void> => {
-      axios.get("/api/projects")
+      axios.get("https://rishiap.vercel.app/api/projects")
         .then((response) => {
           setProjects(response.data);
         })
@@ -48,11 +47,10 @@ export function Projects() {
           {projects.map((project) => (
             <Card key={project.id} className="flex flex-col justify-between group hover:shadow-lg transition-all md:mx-0 mx-4">
               <CardContent className="p-0 relative w-full" style={{ aspectRatio: "16/9" }}>
-                <Image
+                <img
                   src={`https://opengraph.githubassets.com/1/${project.full_name}`}
                   alt={project.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                  fill
+                  className="w-full h-full object-cover rounded-t-lg"
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
               </CardContent>
