@@ -85,24 +85,36 @@ export function Projects() {
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 relative z-10">
           {projects.map((project) => (
-            <Card 
+            <a 
               key={project.id} 
-              className="group flex flex-col justify-between border border-green-400/20 bg-slate-900/50 backdrop-blur hover:border-green-400/50 hover:shadow-2xl hover:shadow-green-400/10 transition-all duration-300 overflow-hidden"
+              href={project.html_url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group relative block"
             >
-              {/* Project Image */}
-              <CardContent className="p-0 relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
-                <Image
-                  src={`https://opengraph.githubassets.com/1/${project.full_name}`}
-                  alt={project.name}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
-              </CardContent>
+              {/* Rotating Aura Line Animation - Border effect */}
+              <div className="absolute -inset-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-conic from-cyan-400 via-green-400 via-purple-400 via-cyan-400 to-transparent animate-spin-slow"></div>
+                <div className="absolute inset-[2px] bg-slate-900 rounded-lg"></div>
+              </div>
+              
+              <Card 
+                className="relative flex flex-col justify-between border border-green-400/20 bg-slate-900/50 backdrop-blur group-hover:border-transparent hover:shadow-2xl hover:shadow-green-400/10 transition-all duration-300 overflow-hidden h-full cursor-pointer"
+              >
+                {/* Project Image */}
+                <CardContent className="p-0 relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                  <Image
+                    src={`https://opengraph.githubassets.com/1/${project.full_name}`}
+                    alt={project.name}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-20"></div>
+                </CardContent>
 
-              {/* Project Info */}
-              <CardHeader className="pb-3">
+                {/* Project Info */}
+                <CardHeader className="pb-3">
                 <CardTitle className="text-lg text-green-300 font-mono">{project.name}</CardTitle>
                 <p className="text-gray-300 text-sm line-clamp-2">{project.description || "No description provided"}</p>
               </CardHeader>
@@ -145,16 +157,17 @@ export function Projects() {
                 </div>
 
                 {/* View Project Button */}
-                <a href={project.html_url} target="_blank" rel="noopener noreferrer" className="w-full">
+                <div className="w-full">
                   <Button
-                    className="w-full bg-green-600 hover:bg-green-700 text-white gap-2 group/btn border border-green-400/30"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white gap-2 group/btn border border-green-400/30 pointer-events-none"
                   >
                     <FiExternalLink size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                     View Project
                   </Button>
-                </a>
+                </div>
               </CardFooter>
             </Card>
+            </a>
           ))}
         </div>
       )}
