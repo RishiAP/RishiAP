@@ -170,7 +170,18 @@
   background: rgba(16, 185, 129, 0.8);
 }
 
+/* Thinner scrollbar for mobile */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+}
 
+html,body{
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
 
 @layer base {
   * {
