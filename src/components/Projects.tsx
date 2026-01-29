@@ -50,7 +50,7 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="container py-16 md:py-24 px-4 md:px-6 relative">
+    <section id="projects" className="container py-16 md:py-24 px-4 md:px-6 relative scroll-mt-2">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-green-400/5 rounded-full blur-3xl"></div>

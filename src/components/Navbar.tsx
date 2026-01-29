@@ -4,8 +4,11 @@ import Image from "next/image";
 import { FaBars } from "react-icons/fa";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useState } from "react";
 
 export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  
   const menuItems = [
     { label: "Intro", href: "#intro" },
     { label: "Skills", href: "#skills" },
@@ -51,7 +54,7 @@ export function Navbar() {
 
         {/* Mobile Sidebar Sheet */}
         <div className="lg:hidden">
-          <Sheet>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <button
                 className="text-xl text-green-400 focus:outline-none hover:text-cyan-400 transition-colors"
@@ -72,6 +75,7 @@ export function Navbar() {
                     <Link
                       key={item.href}
                       href={item.href}
+                      onClick={() => setIsOpen(false)}
                       className="group/item px-4 py-3 text-green-300 hover:text-cyan-400 hover:bg-green-400/10 font-mono text-sm transition-all duration-300 rounded border border-green-400/20 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-green-400/20 hover:translate-x-1"
                     >
                       <span className="text-gray-500 mr-2 group-hover/item:text-cyan-400">~/</span>

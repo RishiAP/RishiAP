@@ -6,7 +6,7 @@ import { FiArrowRight, FiDownload } from "react-icons/fi";
 
 export function Hero() {
   return (
-    <section id="intro" className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 md:px-6 relative">
+    <section id="intro" className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 md:px-6 relative scroll-mt-2">
       {/* Terminal-style background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-green-400/5 rounded-full blur-3xl"></div>
@@ -79,7 +79,7 @@ export function Hero() {
             src="https://res.cloudinary.com/dnxfq38fr/image/upload/v1769608813/MyPic_jpox82.png" 
             width={400}
             height={400}
-            className="relative rounded-full md:max-w-sm max-w-xs h-auto object-cover transition-all duration-500" 
+            className="relative rounded-full md:max-w-sm max-w-[280px] h-auto object-cover transition-all duration-500" 
             alt="Debjyoti"
           />
         </div>

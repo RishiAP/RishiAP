@@ -48,7 +48,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="container py-16 md:py-24 px-4 md:px-6 relative">
+    <section id="contact" className="container py-16 md:py-24 px-4 md:px-6 relative scroll-mt-2">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl"></div>
