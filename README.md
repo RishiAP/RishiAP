@@ -10,35 +10,35 @@
 - Languages
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=java,c,python" />
+    <img src="https://skillicons.dev/icons?i=java,c,python,bash" />
   </a>
 </p>
 
 - Backend
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=php,nodejs,express,nextjs" />
+    <img src="https://skillicons.dev/icons?i=nodejs,nextjs,express,fastapi,flask,php" />
   </a>
 </p>
 
 - Frontend
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=js,bootstrap,react,nextjs,tailwind" />
+    <img src="https://skillicons.dev/icons?i=nextjs,react,vue,tailwind,js,bootstrap" />
   </a>
 </p>
 
 - Database
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=mongodb,mysql,postgres,graphql" />
+    <img src="https://skillicons.dev/icons?i=postgres,mongodb,mysql,graphql" />
   </a>
 </p>
 
 - Tools
 <p align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=git,github,vscode,postman,linux,ts" />
+    <img src="https://skillicons.dev/icons?i=git,linux,github,vscode,postman,ts" />
   </a>
 </p>
 <h3>Connect with me:</h3>
@@ -47,10 +47,10 @@
     <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
   </a>
   <a href="https://instagram.com/rishi_the_programmer/" target="_blank">
-    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Twitter Badge"/>
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Badge"/>
   </a>
   <a href="https://twitter.com/RishiProgrammer/" target="_blank">
-    <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
+    <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=X&logoColor=white" alt="Twitter Badge"/>
   </a>
 </div>
 <h3 align="left">GitHub Stats:</h3>
