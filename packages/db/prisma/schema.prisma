@@ -1,0 +1,168 @@
+// Prisma schema for rishicodes.com portfolio
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Projects ───────────────────────────────────────────────
+
+enum ProjectTier {
+  FLAGSHIP
+  SUPPORTING
+}
+
+enum ProjectCategory {
+  CASE_STUDY // full portfolio case study (stress mgmt, parking, etc.)
+  PACKAGE // npm/pypi/maven published package
+  LIBRARY // reusable library, not necessarily published
+  EXPERIMENT // ML experiment, PoC, hackathon project
+  FIRMWARE // embedded/IoT project (ESP32, Arduino, etc.)
+  TOOL // CLI tool, dev tool, utility
+  APPLICATION // full app that isn't a case study (e.g. e-commerce)
+  OTHER // catch-all
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  summary     String
+  description String?         @db.Text // general description (markdown)
+  category    ProjectCategory @default(CASE_STUDY)
+  techStack   String[]
+  liveUrl     String?
+  repoUrl     String?
+  repoOwner   String? // GitHub owner for API calls (defaults to "RishiAP")
+  repoName    String? // GitHub repo name — used to fetch README, stars, etc.
+  diagramUrl  String?
+  coverUrl    String? // hero image / cover for the card
+  tier        ProjectTier     @default(SUPPORTING)
+  published   Boolean         @default(false)
+  order       Int             @default(0)
+
+  // ── Case Study fields (optional, only used for CASE_STUDY category) ──
+  problem          String? @db.Text
+  architectureNote String? @db.Text
+  keyDecision      String? @db.Text
+
+  // ── Package/Library fields (optional) ──
+  packageName     String? // e.g. "@rishicodes/lexiform", "nexticron"
+  packageRegistry String? // "npm", "pypi", "maven", "crates", "pub"
+  packageUrl      String? // direct link to registry page
+
+  // ── Metadata ──
+  languages String[] // multiple primary languages
+  topics    String[] // freeform tags beyond techStack: "iot", "ml", "auth"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, tier])
+  @@index([published, category])
+  @@index([slug])
+}
+
+// ─── Blog Posts ─────────────────────────────────────────────
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String?   @db.Text
+  contentHtml String    @db.Text // sanitized HTML for public site
+  contentJson Json // @rishiap/lexiform raw state
+  coverUrl    String?
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tags        String[]
+
+  @@index([published])
+  @@index([slug])
+}
+
+// ─── Skills ─────────────────────────────────────────────────
+
+model SkillCategory {
+  id     String  @id @default(cuid())
+  name   String  @unique // e.g. "core", "embedded", "supporting"
+  order  Int     @default(0)
+  skills Skill[]
+
+  @@index([order])
+}
+
+model Skill {
+  id         String        @id @default(cuid())
+  name       String // e.g. "TypeScript"
+  field      String // e.g. "languages", "frameworks"
+  categoryId String
+  category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  order      Int           @default(0)
+
+  @@index([categoryId, order])
+}
+
+// ─── Education ──────────────────────────────────────────────
+
+model Education {
+  id          String  @id @default(cuid())
+  branch      String?
+  startDate   String // e.g. "2022-08" (month precision)
+  endDate     String? // null = present/ongoing
+  degree      String // e.g. "B.Tech, Computer Engineering"
+  institution String // e.g. "GB Pant University · Pantnagar"
+  description String?
+  order       Int     @default(0)
+
+  @@index([order])
+}
+
+// ─── Experience ─────────────────────────────────────────────
+
+enum ExperienceType {
+  WORK
+  INTERNSHIP
+  VOLUNTEER
+  FREELANCE
+  OPEN_SOURCE
+  LEADERSHIP
+}
+
+model Experience {
+  id          String         @id @default(cuid())
+  type        ExperienceType
+  role        String // e.g. "Full Stack Developer"
+  org         String // e.g. "Google"
+  orgUrl      String? // link to org website
+  location    String? // e.g. "Bangalore, India" or "Remote"
+  startDate   String // e.g. "2024-06" (month precision)
+  endDate     String? // null = present/ongoing
+  description String?        @db.Text // what you did — rich text or bullet points
+  techStack   String[] // technologies used in this role
+  published   Boolean        @default(false)
+  order       Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([published, order])
+}
+
+// ─── Social Links ───────────────────────────────────────────
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String   // e.g. "github", "twitter", "linkedin", "resume", "email"
+  url       String
+  label     String?  // Optional display text (e.g. "@rishicodes")
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+
+  @@index([order])
+}

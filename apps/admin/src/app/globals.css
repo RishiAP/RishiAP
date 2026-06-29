@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* ── Admin Design System: Premium Dark (Zinc/Indigo) ── */
+  --color-background: oklch(0.141 0.005 285.823); /* zinc-950 */
+  --color-foreground: oklch(0.985 0.001 285.823); /* zinc-50 */
+
+  --color-card: oklch(0.169 0.005 285.823); /* zinc-900 */
+  --color-card-foreground: oklch(0.985 0.001 285.823);
+
+  --color-popover: oklch(0.169 0.005 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+
+  --color-primary: oklch(0.646 0.222 284.711); /* indigo-500 */
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-secondary: oklch(0.269 0.005 285.823); /* zinc-800 */
+  --color-secondary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted: oklch(0.269 0.005 285.823);
+  --color-muted-foreground: oklch(0.708 0.004 285.823); /* zinc-400 */
+
+  --color-accent: oklch(0.269 0.005 285.823);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+
+  --color-destructive: oklch(0.577 0.245 27.330);
+  --color-destructive-foreground: oklch(0.985 0.001 285.823);
+
+  --color-border: oklch(0.269 0.005 285.823);
+  --color-input: oklch(0.269 0.005 285.823);
+  --color-ring: oklch(0.646 0.222 284.711);
+
+  /* Sidebar */
+  --color-sidebar: oklch(0.141 0.005 285.823);
+  --color-sidebar-foreground: oklch(0.708 0.004 285.823);
+  --color-sidebar-primary: oklch(0.646 0.222 284.711);
+  --color-sidebar-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-sidebar-accent: oklch(0.205 0.005 285.823); /* zinc-900 with more lightness */
+  --color-sidebar-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-sidebar-border: oklch(0.205 0.005 285.823);
+  --color-sidebar-ring: oklch(0.646 0.222 284.711);
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --radius: 0.5rem;
+}
+
+/* Base resets */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+

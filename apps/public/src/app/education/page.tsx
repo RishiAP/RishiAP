@@ -1,0 +1,29 @@
+import React from 'react';
+import { getEducation } from '@/lib/api';
+import { EducationTable } from '@/components/EducationTable';
+
+export const metadata = {
+  title: 'Education | Rishi',
+  description: 'My educational background and qualifications.',
+};
+
+export default async function EducationPage() {
+  const education = await getEducation().catch(() => []);
+
+  return (
+    <div className="flex-1 h-full px-6 py-12 md:px-12 max-w-4xl mx-auto w-full">
+      <h1 className="text-4xl font-bold tracking-tight text-zinc-100 mb-4">
+        Education
+      </h1>
+      <p className="text-xl text-zinc-400 mb-16 max-w-2xl">
+        My academic background, degrees, and institutions.
+      </p>
+
+      {education.length > 0 ? (
+        <EducationTable education={education} />
+      ) : (
+        <div className="pl-4 text-zinc-500 italic">No education records found.</div>
+      )}
+    </div>
+  );
+}

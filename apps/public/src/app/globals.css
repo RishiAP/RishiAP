@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* ── IDE / Terminal Theme ── */
+
+  /* VS Code Dark+ Colors */
+  --color-ide-bg: #1e1e1e;
+  --color-ide-activity-bar: #333333;
+  --color-ide-sidebar: #252526;
+  --color-ide-editor: #1e1e1e;
+  --color-ide-terminal: #181818;
+  --color-ide-panel-border: #3c3c3c;
+  --color-ide-titlebar: #323233;
+  --color-ide-statusbar: #007acc;
+  --color-ide-tab-active: #1e1e1e;
+  --color-ide-tab-inactive: #2d2d2d;
+
+  /* VS Code Syntax Colors */
+  --color-syn-keyword: #569cd6; /* Blue */
+  --color-syn-control: #c586c0; /* Purple */
+  --color-syn-string: #ce9178;  /* Orange/Brown */
+  --color-syn-number: #b5cea8;  /* Light Green */
+  --color-syn-comment: #6a9955; /* Dark Green */
+  --color-syn-type: #4ec9b0;    /* Teal */
+  --color-syn-class: #4ec9b0;   /* Teal */
+  --color-syn-function: #dcdcaa; /* Yellow */
+  --color-syn-variable: #9cdcfe; /* Light Blue */
+  --color-syn-operator: #d4d4d4; /* Gray */
+
+  /* shadcn-compatible tokens mapped to IDE theme */
+  --color-background: #09090b; /* zinc-950 */
+  --color-foreground: #d4d4d8; /* zinc-300 */
+  --color-card: #09090b; /* zinc-950 */
+  --color-card-foreground: #d4d4d8;
+  --color-primary: #6366f1; /* indigo-500 */
+  --color-primary-foreground: #ffffff;
+  --color-muted: #18181b; /* zinc-900 */
+  --color-muted-foreground: #a1a1aa; /* zinc-400 */
+  --color-border: #27272a; /* zinc-800 */
+  --color-input: #18181b; /* zinc-900 */
+  --color-ring: #6366f1; /* indigo-500 */
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --radius: 0; /* IDEs usually have sharp corners */
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.3s ease both;
+  --animate-typing: typing 2s steps(40, end);
+  --animate-cursor-blink: cursor-blink 1s step-end infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes typing {
+  from { max-width: 0 }
+  to { max-width: 100% }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #cccccc; }
+}
+
+/* Base resets */
+* {
+  border-color: var(--color-border);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-mono); /* Default to mono for the IDE feel */
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* App takes exactly the viewport size */
+}
+
+/* Selection colors */
+::selection {
+  background-color: #264f78; /* VS Code selection blue */
+  color: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ide-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+:root, .dark {
+  --sidebar: #09090b; /* zinc-950 */
+  --sidebar-foreground: #d4d4d8; /* zinc-300 */
+  --sidebar-primary: #6366f1; /* indigo-500 */
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #18181b; /* zinc-900 */
+  --sidebar-accent-foreground: #f4f4f5; /* zinc-100 */
+  --sidebar-border: #27272a; /* zinc-800 */
+  --sidebar-ring: #6366f1; /* indigo-500 */
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
