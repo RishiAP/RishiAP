@@ -23,4 +23,4 @@ The application runs on port `3001` by default.
 This application can be deployed to Render, Vercel, or any Node.js container.
 - **Build Command**: `pnpm --filter @rishicodes/admin build`
 - **Start Command**: `pnpm --filter @rishicodes/admin start`
-- Ensure `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, and `CLERK_SECRET_KEY` are provided in the environment.
+- Ensure `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL` are provided in the environment.
