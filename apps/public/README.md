@@ -5,7 +5,7 @@ The highly-optimized, dynamic public-facing portfolio website.
 ## Overview
 Built with **Next.js 16 (App Router)** and **Tailwind CSS v4**. 
 - Features stunning OKLCH-based theme styling and Framer Motion animations.
-- Generates pages dynamically while using Next.js Incremental Static Regeneration (ISR) with a `revalidate: 3600` config to ensure lightning-fast edge caching.
+- Generates pages dynamically while using Next.js Incremental Static Regeneration (ISR) with surgical `revalidatePath`/`revalidateTag` cache-warming and a `revalidate: 300` fallback to ensure lightning-fast edge caching with 1-refresh updates.
 - Reads HTML directly produced by the Admin panel's Lexiform editor, styling it elegantly with `@tailwindcss/typography`.
 
 ## Dependencies & Monorepo Linkage
@@ -25,3 +25,4 @@ This app generates optimized server components and cache layers. Deployable to R
 - **Build Command**: `pnpm build:public`
 - **Start Command**: `pnpm --filter @rishicodes/public start`
 - Ensure `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `REVALIDATE_SECRET`, `REVALIDATE_TIME`, and `GITHUB_REVALIDATE_TIME` are provided in the environment.
+- **Optional**: Set `TIMEZONE` (e.g. `Asia/Kolkata` or `America/New_York`) to anchor server-side date expiration logic (like active roles) to your local timezone. Defaults to `Asia/Kolkata`.

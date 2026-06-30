@@ -91,8 +91,19 @@ export async function getExperience() {
 }
 
 export function computeActiveRole(experience: ExperienceResponse[]) {
-  const now = new Date();
-  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  // Vercel runs in UTC. We force it to evaluate the date using your configured timezone.
+  // If you move countries, simply update the TIMEZONE environment variable in Vercel.
+  const userTimezone = process.env.TIMEZONE || 'Asia/Kolkata';
+  
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: userTimezone,
+    year: 'numeric',
+    month: '2-digit',
+  });
+  const parts = formatter.formatToParts(new Date());
+  const year = parts.find(p => p.type === 'year')?.value;
+  const month = parts.find(p => p.type === 'month')?.value;
+  const currentMonthStr = `${year}-${month}`;
   
   const currentOngoingRoles = experience.filter((e) => {
     if (!e.endDate || e.endDate.trim() === '') return true;
