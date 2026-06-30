@@ -4,6 +4,6 @@ import 'dotenv/config';
 export default defineConfig({
   schema: 'prisma/schema.prisma',
   datasource: {
-    url: env('DIRECT_URL'), // CLI uses direct connection for migrations
+    url: process.env.DIRECT_URL || 'postgresql://dummy:dummy@localhost/dummy', // CLI uses direct connection for migrations (fallback needed for Vercel builds)
   },
 });
