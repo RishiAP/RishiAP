@@ -22,6 +22,6 @@ The application runs on port `3000` by default.
 
 ## Deployment
 This app generates optimized server components and cache layers. Deployable to Render, Vercel, or standard Node.js servers.
-- **Build Command**: `pnpm --filter @rishicodes/public build`
+- **Build Command**: `pnpm build:public`
 - **Start Command**: `pnpm --filter @rishicodes/public start`
 - Ensure `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `REVALIDATE_SECRET`, `REVALIDATE_TIME`, and `GITHUB_REVALIDATE_TIME` are provided in the environment.
