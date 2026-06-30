@@ -15,10 +15,10 @@ export async function fetchPublicApi<T>(endpoint: string, options?: RequestInit)
       'Content-Type': 'application/json',
       ...options?.headers,
     },
-    // If the request has tags for on-demand revalidation, do NOT mix it with time-based revalidation.
-    // Mixing them causes Next.js to use stale-while-revalidate (requiring two refreshes).
     next: { 
-      ...(options?.next?.tags ? {} : { revalidate: DEFAULT_REVALIDATE }), 
+      // In production, fallback to 1-hour time-based revalidation so date expirations automatically refresh.
+      // In development, strict tag-based caching ensures 1-refresh updates.
+      ...(process.env.NODE_ENV === 'production' ? { revalidate: 3600 } : {}),
       ...options?.next 
     },
   });
@@ -51,7 +51,7 @@ export interface GithubProjectMeta {
 export async function getProjectEnriched(slug: string) {
   return fetchPublicApi<ProjectResponse & { github: { meta: GithubProjectMeta; readme: string | null } | null }>(
     `/projects/${slug}/enriched`,
-    { next: { revalidate: 600, tags: [`project-${slug}`] } },
+    { next: { tags: [`project-${slug}`] } },
   );
 }
 
