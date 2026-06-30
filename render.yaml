@@ -5,7 +5,7 @@ services:
   - type: web
     name: rishicodes-api
     runtime: node
-    region: oregon
+    region: singapore
     plan: free
     buildCommand: |
       npm install -g pnpm@11.9.0 &&
