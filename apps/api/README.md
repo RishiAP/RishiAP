@@ -22,6 +22,6 @@ pnpm --filter @rishicodes/api dev
 ## Deployment
 This app should be deployed as a standard Node.js web service. Because this is the central API, it is responsible for running database migrations before booting.
 
-- **Build Command**: `pnpm db:deploy && pnpm --filter @rishicodes/api build`
+- **Build Command**: `pnpm --filter @rishicodes/db migrate:deploy && pnpm --filter @rishicodes/api build`
 - **Start Command**: `pnpm --filter @rishicodes/api start:prod`
-- Ensure `DATABASE_URL`, `ALLOWED_ORIGINS`, `CLERK_SECRET_KEY`, `API_BASE_URL`, `GITHUB_PAT`, `GITHUB_OWNER`, `PUBLIC_SITE_URL`, and `REVALIDATE_SECRET` are provided in the environment.
+- Ensure `DATABASE_URL`, `DIRECT_URL`, `ALLOWED_ORIGINS`, `CLERK_SECRET_KEY`, `API_BASE_URL`, `GITHUB_PAT`, `GITHUB_OWNER`, `PUBLIC_SITE_URL`, `REVALIDATE_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` are provided in the environment.
