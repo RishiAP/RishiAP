@@ -27,7 +27,7 @@ export class ClerkAuthGuard implements CanActivate {
 
       const payload = await verifyToken(token, {
         secretKey: secretKey!,
-        authorizedParties: adminOrigin ? [adminOrigin] : undefined,
+        authorizedParties: adminOrigin ? adminOrigin.split(',').map(o => o.trim()) : undefined,
       });
 
       // Attach user info to request

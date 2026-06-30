@@ -27,8 +27,6 @@ services:
         sync: false
       - key: ADMIN_ORIGIN
         sync: false
-      - key: PUBLIC_ORIGIN
-        sync: false
       - key: CLERK_SECRET_KEY
         sync: false
       - key: GITHUB_PAT
