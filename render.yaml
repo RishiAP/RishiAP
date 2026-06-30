@@ -8,7 +8,6 @@ services:
     region: singapore
     plan: free
     buildCommand: |
-      npm install -g pnpm@11.9.0 &&
       pnpm install --frozen-lockfile &&
       pnpm --filter @rishicodes/db generate &&
       pnpm --filter @rishicodes/db migrate:deploy &&
