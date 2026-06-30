@@ -61,8 +61,10 @@ async function bootstrap() {
 
   // ── Start ──
   const port = process.env.PORT ?? 3002;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
+  
+  const baseUrl = process.env.API_BASE_URL || `http://localhost:${port}`;
   console.log(`🚀 API running on port ${port}`);
-  console.log(`📖 Swagger docs at http://localhost:${port}/docs`);
+  console.log(`📖 Swagger docs at ${baseUrl}/docs`);
 }
 bootstrap();

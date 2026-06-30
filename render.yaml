@@ -13,7 +13,7 @@ services:
       pnpm --filter @rishicodes/db migrate:deploy &&
       pnpm build:api
     startCommand: node apps/api/dist/main.js
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
