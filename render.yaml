@@ -33,7 +33,7 @@ services:
       - key: GITHUB_PAT
         sync: false
       - key: GITHUB_OWNER
-        value: RishiAP
+        sync: false
       - key: PUBLIC_SITE_URL
         sync: false
       - key: REVALIDATE_SECRET
