@@ -21,6 +21,9 @@ interface HomeClientProps {
   socialLinks: SocialLinkResponse[];
   fetchTimeMs: number;
   timestamp: string;
+  currentRole: string;
+  company: string | null;
+  activeRolesCount: number;
 }
 
 const SocialIconMap: Record<string, React.FC<any>> = {
@@ -32,34 +35,12 @@ const SocialIconMap: Record<string, React.FC<any>> = {
   default: LinkIcon,
 };
 
-export function HomeClient({ experience, projects, posts, skills, socialLinks, fetchTimeMs, timestamp }: HomeClientProps) {
+export function HomeClient({ experience, projects, posts, skills, socialLinks, fetchTimeMs, timestamp, currentRole, company, activeRolesCount }: HomeClientProps) {
   // State for interactive JSON pane
   const [hoveredItem, setHoveredItem] = useState<{ 
     type: 'project' | 'post' | 'profile'; 
     data?: ProjectResponse | PostResponse | ExperienceResponse | null 
   }>({ type: 'profile' });
-
-  // Calculate dynamic stats
-  const now = new Date();
-  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  
-  const currentOngoingRoles = experience.filter((e) => {
-    if (!e.endDate || e.endDate.trim() === '') return true;
-    return e.endDate >= currentMonthStr;
-  }).sort((a, b) => {
-    // Treat empty/null endDate as Infinity ("9999-99")
-    const endA = (!a.endDate || a.endDate.trim() === '') ? '9999-99' : a.endDate;
-    const endB = (!b.endDate || b.endDate.trim() === '') ? '9999-99' : b.endDate;
-    
-    if (endA === endB) {
-      // Fallback to startDate descending if endDates are the same
-      return (b.startDate || '').localeCompare(a.startDate || '');
-    }
-    return endB.localeCompare(endA);
-  });
-
-  const currentRole = currentOngoingRoles.length > 0 ? currentOngoingRoles[0].role : "Full Stack Developer";
-  const company = currentOngoingRoles.length > 0 ? currentOngoingRoles[0].org : null;
   
   // Extract all skills from the nested categories
   const allSkills = skills.flatMap((category: SkillCategory) => category.skills || []);
@@ -139,7 +120,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
         metrics: {
           publishedProjects: publishedProjects.length,
           publishedArticles: publishedPosts.length,
-          activeRoles: currentOngoingRoles.length
+          activeRoles: activeRolesCount
         },
         stack: {
           core: primarySkills.length > 0 ? primarySkills : ["TypeScript", "Node.js", "PostgreSQL"],

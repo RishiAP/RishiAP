@@ -90,6 +90,30 @@ export async function getExperience() {
   return fetchPublicApi<ExperienceResponse[]>('/experience', { next: { tags: ['experience-list'] } });
 }
 
+export function computeActiveRole(experience: ExperienceResponse[]) {
+  const now = new Date();
+  const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  
+  const currentOngoingRoles = experience.filter((e) => {
+    if (!e.endDate || e.endDate.trim() === '') return true;
+    return e.endDate >= currentMonthStr;
+  }).sort((a, b) => {
+    const endA = (!a.endDate || a.endDate.trim() === '') ? '9999-99' : a.endDate;
+    const endB = (!b.endDate || b.endDate.trim() === '') ? '9999-99' : b.endDate;
+    if (endA === endB) return (b.startDate || '').localeCompare(a.startDate || '');
+    return endB.localeCompare(endA);
+  });
+
+  if (currentOngoingRoles.length > 0) {
+    return { 
+      role: currentOngoingRoles[0].role, 
+      company: currentOngoingRoles[0].org,
+      activeRolesCount: currentOngoingRoles.length
+    };
+  }
+  return { role: "Full Stack Developer", company: null, activeRolesCount: 0 };
+}
+
 export async function getSocialLinks() {
   return fetchPublicApi<SocialLinkResponse[]>('/v1/social-links', { next: { tags: ['social-links'] } });
 }

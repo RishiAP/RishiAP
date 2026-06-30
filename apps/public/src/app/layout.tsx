@@ -3,7 +3,7 @@ import "./globals.css";
 import { ApiDocsShell } from "@/components/ApiDocsShell";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Fira_Code } from "next/font/google";
-import { getExperience } from "@/lib/api";
+import { getExperience, computeActiveRole } from "@/lib/api";
 import { cache } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -12,34 +12,16 @@ const firaCode = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" })
 const getActiveRole = cache(async () => {
   try {
     const experience = await getExperience();
-    const now = new Date();
-    const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    
-    const currentOngoingRoles = experience.filter((e) => {
-      if (!e.endDate || e.endDate.trim() === '') return true;
-      return e.endDate >= currentMonthStr;
-    }).sort((a, b) => {
-      const endA = (!a.endDate || a.endDate.trim() === '') ? '9999-99' : a.endDate;
-      const endB = (!b.endDate || b.endDate.trim() === '') ? '9999-99' : b.endDate;
-      if (endA === endB) return (b.startDate || '').localeCompare(a.startDate || '');
-      return endB.localeCompare(endA);
-    });
-
-    if (currentOngoingRoles.length > 0) {
-      return { 
-        role: currentOngoingRoles[0].role, 
-        org: currentOngoingRoles[0].org 
-      };
-    }
+    return computeActiveRole(experience);
   } catch (error) {
     console.error("Failed to fetch experience:", error);
   }
-  return { role: "Full Stack Developer", org: null };
+  return { role: "Full Stack Developer", company: null };
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { role, org } = await getActiveRole();
-  const titleString = org ? `${role} at ${org}` : role;
+  const { role, company } = await getActiveRole();
+  const titleString = company ? `${role} at ${company}` : role;
   
   return {
     title: {

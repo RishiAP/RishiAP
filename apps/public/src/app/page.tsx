@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSkills, getExperience, getProjects, getPosts, getEducation, getSocialLinks } from '@/lib/api';
+import { getSkills, getExperience, getProjects, getPosts, getEducation, getSocialLinks, computeActiveRole } from '@/lib/api';
 import { HomeClient } from '@/components/home-client';
 
 export default async function Home() {
@@ -14,6 +14,8 @@ export default async function Home() {
   ]);
   const fetchTimeMs = Date.now() - startTime;
   const timestamp = new Date().toISOString();
+  
+  const { role, company, activeRolesCount } = computeActiveRole(experience);
 
   return (
     <HomeClient 
@@ -24,6 +26,9 @@ export default async function Home() {
       socialLinks={socialLinks}
       fetchTimeMs={fetchTimeMs}
       timestamp={timestamp}
+      currentRole={role}
+      company={company}
+      activeRolesCount={activeRolesCount}
     />
   );
 }
