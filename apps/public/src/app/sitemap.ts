@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://rishicodes.com';
-  const apiBase = process.env.API_BASE_URL || 'http://localhost:3002';
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
 
   // Fetch published projects and posts from API
   let projects: { slug: string; updatedAt: string }[] = [];
