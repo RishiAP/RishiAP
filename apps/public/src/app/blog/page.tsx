@@ -7,9 +7,6 @@ export const metadata: Metadata = {
 };
 import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
-
-export const revalidate = 3600;
-
 export default async function BlogIndexPage() {
   const posts = await getPosts().catch(() => []);
 

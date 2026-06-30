@@ -4,11 +4,12 @@ import { ApiDocsShell } from "@/components/ApiDocsShell";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Inter, Fira_Code } from "next/font/google";
 import { getExperience } from "@/lib/api";
+import { cache } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const firaCode = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" });
 
-async function getActiveRole() {
+const getActiveRole = cache(async () => {
   try {
     const experience = await getExperience();
     const now = new Date();
@@ -34,7 +35,7 @@ async function getActiveRole() {
     console.error("Failed to fetch experience:", error);
   }
   return { role: "Full Stack Developer", org: null };
-}
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const { role, org } = await getActiveRole();

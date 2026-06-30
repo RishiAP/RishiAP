@@ -31,8 +31,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-export const revalidate = 3600;
-
 export async function generateStaticParams() {
   const { getPosts } = await import('@/lib/api');
   const posts = await getPosts().catch(() => []);
