@@ -16,9 +16,9 @@ export async function fetchPublicApi<T>(endpoint: string, options?: RequestInit)
       ...options?.headers,
     },
     next: { 
-      // In production, fallback to 1-hour time-based revalidation so date expirations automatically refresh.
+      // In production, fallback to 5-minute time-based revalidation so date expirations automatically refresh quickly.
       // In development, strict tag-based caching ensures 1-refresh updates.
-      ...(process.env.NODE_ENV === 'production' ? { revalidate: 3600 } : {}),
+      ...(process.env.NODE_ENV === 'production' ? { revalidate: 300 } : {}),
       ...options?.next 
     },
   });

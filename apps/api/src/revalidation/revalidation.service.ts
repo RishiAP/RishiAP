@@ -32,5 +32,20 @@ export class RevalidationService {
     if (!response.ok) {
       throw new Error(`Revalidation failed: ${response.status} ${response.statusText}`);
     }
+
+    // Cache Warming: Silently hit the public URLs in the background.
+    // This forces Vercel to rebuild the HTML immediately, so the first actual human visitor 
+    // gets a 0ms cached response instead of taking the 500ms rebuild penalty.
+    setTimeout(() => {
+      const pathsToWarm = ['/'];
+      if (tags.some(t => t.includes('project'))) pathsToWarm.push('/projects');
+      if (tags.some(t => t.includes('post'))) pathsToWarm.push('/blog');
+      
+      pathsToWarm.forEach(path => {
+        fetch(`${publicSiteUrl}${path}`)
+          .then(res => this.logger.log(`Cache warmed for ${path} (${res.status})`))
+          .catch(e => this.logger.warn(`Cache warming failed for ${path}: ${e.message}`));
+      });
+    }, 200); // Slight delay to ensure Vercel has fully registered the purge
   }
 }

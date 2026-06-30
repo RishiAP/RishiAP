@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ revalidated: true, tags });
   } catch (error) {
-    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+    console.error('Revalidate Route Error:', error);
+    return NextResponse.json({ error: 'Invalid request body or internal error' }, { status: 400 });
   }
 }
