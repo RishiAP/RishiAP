@@ -11,7 +11,7 @@ services:
       pnpm install --frozen-lockfile &&
       pnpm --filter @rishicodes/db generate &&
       pnpm --filter @rishicodes/db migrate:deploy &&
-      pnpm --filter @rishicodes/api build
+      pnpm build:api
     startCommand: node apps/api/dist/main.js
     healthCheckPath: /api/health
     envVars:
