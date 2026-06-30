@@ -61,7 +61,11 @@ export function AppSidebar({ currentRole = "Software Engineer" }: { currentRole?
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => {
-                const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+                // Robust check: if it's the home page, ensure it matches exactly '/' or empty string.
+                // Otherwise, use startsWith for nested routes like /projects/slug
+                const isActive = item.href === '/' 
+                  ? (pathname === '/' || pathname === '') 
+                  : pathname?.startsWith(item.href);
 
                 return (
                   <SidebarMenuItem key={item.href}>
