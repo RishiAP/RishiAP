@@ -140,10 +140,10 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
     .replace(/: (true|false|null|[0-9]+)/g, ': <span class="text-emerald-300">$1</span>');
 
   return (
-    <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_500px] h-full"
+    <div className="flex-1 grid grid-cols-1 xl:grid-cols-[1fr_400px] 2xl:grid-cols-[1fr_500px] h-full"
          onMouseLeave={() => setHoveredItem({ type: 'profile' })}>
       {/* Middle Prose Pane */}
-      <div className="px-6 py-12 md:px-12 max-w-4xl mx-auto lg:mx-0 w-full space-y-20">
+      <div className="px-4 py-8 md:px-8 lg:px-12 md:py-12 max-w-4xl mx-auto lg:mx-0 w-full space-y-20">
         
         {/* Intro Section */}
         <section className="relative" onMouseEnter={() => setHoveredItem({ type: 'profile' })}>
@@ -302,7 +302,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
       </div>
 
       {/* Right Code Snippet Pane (Sticky) */}
-      <div className="bg-zinc-900/80 backdrop-blur-xl border-l border-zinc-800/80 p-8 hidden lg:flex flex-col sticky top-0 h-screen transition-colors duration-500">
+      <div className="bg-zinc-900/80 backdrop-blur-xl border-l border-zinc-800/80 p-8 hidden xl:flex flex-col sticky top-0 h-screen transition-colors duration-500">
         <div className="mb-8">
           <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3 flex items-center justify-between">
             <span>Request</span>

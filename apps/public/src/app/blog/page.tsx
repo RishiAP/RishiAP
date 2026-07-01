@@ -11,9 +11,9 @@ export default async function BlogIndexPage() {
   const posts = await getPosts().catch(() => []);
 
   return (
-    <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_500px] h-full">
+    <div className="flex-1 grid grid-cols-1 xl:grid-cols-[1fr_400px] 2xl:grid-cols-[1fr_500px] h-full">
       {/* Middle Prose Pane */}
-      <div className="px-6 py-12 md:px-12 max-w-3xl mx-auto lg:mx-0 w-full">
+      <div className="px-4 py-8 md:px-8 lg:px-12 md:py-12 max-w-3xl mx-auto lg:mx-0 w-full">
         <h1 className="text-4xl font-bold tracking-tight text-zinc-100 mb-4">
           Writing
         </h1>
@@ -66,7 +66,7 @@ export default async function BlogIndexPage() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden lg:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
         <div className="mb-6">
           <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Request</div>
           <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">

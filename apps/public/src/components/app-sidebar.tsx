@@ -21,6 +21,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 
 const navItems = [
@@ -34,6 +35,13 @@ const navItems = [
 
 export function AppSidebar({ currentRole = "Software Engineer" }: { currentRole?: string }) {
   const pathname = usePathname();
+  const { setOpenMobile, isMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
 
   return (
     <Sidebar collapsible="icon" className="font-sans text-zinc-300">
@@ -75,7 +83,7 @@ export function AppSidebar({ currentRole = "Software Engineer" }: { currentRole?
                       tooltip={item.title}
                       className={isActive ? "bg-indigo-500/10 text-indigo-400 font-medium hover:bg-indigo-500/20 hover:text-indigo-300" : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"}
                     >
-                      <Link href={item.href}>
+                      <Link href={item.href} onClick={handleLinkClick}>
                         <item.icon />
                         <span>{item.title}</span>
                       </Link>

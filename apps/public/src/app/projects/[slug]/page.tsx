@@ -63,9 +63,9 @@ export default async function ProjectDetailPage({
   const isPackageOrLibrary = project.category === 'PACKAGE' || project.category === 'LIBRARY';
 
   return (
-    <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_500px] h-full">
+    <div className="flex-1 grid grid-cols-1 xl:grid-cols-[1fr_400px] 2xl:grid-cols-[1fr_500px] h-full">
       {/* Main Content */}
-      <div className="px-6 py-12 md:px-12 w-full">
+      <div className="px-4 py-8 md:px-8 lg:px-12 md:py-12 w-full">
         <Link href="/projects" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200 transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" />
           Back to Projects
@@ -176,7 +176,7 @@ export default async function ProjectDetailPage({
                 <h2 className="text-lg font-semibold text-zinc-200 mb-4 font-mono">
                   <span className="text-indigo-400">README.md</span>
                 </h2>
-                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
+                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
                 </div>
               </>
@@ -186,7 +186,7 @@ export default async function ProjectDetailPage({
                   <span className="text-indigo-400 mr-2">▸</span>
                   README.md
                 </summary>
-                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
+                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
                 </div>
               </details>
@@ -196,7 +196,7 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Right Pane — GitHub Stats */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden lg:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
         <div className="mb-6">
           <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Request</div>
           <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">

@@ -14,16 +14,15 @@ export function ApiDocsShell({ children, currentRole }: { children: React.ReactN
         {/* Main Content Area */}
         <main className="flex-1 min-w-0 flex flex-col h-screen overflow-hidden">
           {/* Universal Header with SidebarTrigger */}
-          <header className="h-14 shrink-0 border-b border-zinc-800 flex items-center px-4 bg-zinc-950 sticky top-0 z-10">
+          <header className="h-14 shrink-0 border-b border-zinc-800 flex items-center px-3 md:px-4 bg-zinc-950 sticky top-0 z-10">
             <SidebarTrigger className="mr-3 text-zinc-400 hover:text-zinc-100" />
             <div className="flex items-center gap-2 font-semibold text-zinc-100">
               <span className="md:hidden">Debjyoti Mondal</span>
             </div>
           </header>
 
-          {/* Dynamic Pages */}
           <ScrollArea className="h-[calc(100vh-3.5rem)] w-full">
-            <div className="p-4 md:p-8">
+            <div className="xl:p-6 2xl:p-8">
               {children}
             </div>
           </ScrollArea>

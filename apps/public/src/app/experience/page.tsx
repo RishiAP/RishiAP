@@ -11,7 +11,7 @@ export default async function ExperiencePage() {
   const experiences = await getExperience().catch(() => []);
 
   return (
-    <div className="flex-1 h-full px-6 py-12 md:px-12 max-w-4xl mx-auto w-full">
+    <div className="flex-1 h-full px-4 py-8 md:px-8 lg:px-12 md:py-12 max-w-4xl mx-auto w-full">
       <h1 className="text-4xl font-bold tracking-tight text-zinc-100 mb-4">
         Experience
       </h1>
