@@ -231,7 +231,7 @@ export default function EditProjectPage() {
           </p>
         </div>
         <Button variant="outline" asChild>
-          <a href={`http://localhost:3000/projects/${projectSlug}`} target="_blank" rel="noopener noreferrer">
+          <a href={`${process.env.NEXT_PUBLIC_PUBLIC_APP_URL || 'http://localhost:3000'}/projects/${projectSlug}`} target="_blank" rel="noopener noreferrer">
             View Live
           </a>
         </Button>

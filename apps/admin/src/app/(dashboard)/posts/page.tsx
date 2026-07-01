@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, Pencil, Eye } from 'lucide-react';
+import { PlusCircle, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { fetchApi } from '@/lib/api-client';
 import { type PostResponse } from '@rishicodes/shared-types';
@@ -79,13 +79,7 @@ export default async function PostsPage() {
                         })}
                       </TableCell>
                       <TableCell className="text-right space-x-2">
-                        {post.published && (
-                          <Link href={`${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`} target="_blank">
-                            <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </Link>
-                        )}
+
                         <Link href={`/posts/${post.slug}/edit`}>
                           <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
                             <Pencil className="h-4 w-4" />
