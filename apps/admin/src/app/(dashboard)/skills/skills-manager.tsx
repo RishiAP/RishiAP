@@ -321,7 +321,7 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
               {categories.map((category) => (
                 <SortableCategory key={category.id} category={category} onEdit={() => openCategoryEdit(category)}>
                   <div className="mt-4 rounded-md border">
-                    <Table>
+                    <Table className="min-w-[800px]">
                       <TableHeader>
                         <TableRow className="bg-muted/50 hover:bg-muted/50">
                           <TableHead className="w-10"></TableHead>

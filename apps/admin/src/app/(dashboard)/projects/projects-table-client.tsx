@@ -56,7 +56,7 @@ export function ProjectsTableClient({ initialData }: { initialData: ProjectRespo
   return (
     <div className="rounded-md border">
       <SortableTable items={items} onReorder={handleReorder}>
-        <Table>
+        <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow className="bg-muted/50 hover:bg-muted/50">
               <TableHead className="w-[40px] px-2"></TableHead>

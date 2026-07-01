@@ -3,16 +3,27 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./app-sidebar";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export function ApiDocsShell({ children, currentRole }: { children: React.ReactNode, currentRole?: string }) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const viewport = document.querySelector('#main-scroll [data-slot="scroll-area-viewport"]');
+    if (viewport) {
+      viewport.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full bg-zinc-950 text-zinc-300 font-sans overflow-hidden">
+      <div className="flex h-[100dvh] w-full bg-zinc-950 text-zinc-300 font-sans overflow-hidden">
         {/* Shadcn Sidebar */}
         <AppSidebar currentRole={currentRole || "Software Engineer"} />
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 flex flex-col h-screen overflow-hidden">
+        <main className="flex-1 min-w-0 flex flex-col h-[100dvh] overflow-hidden">
           {/* Universal Header with SidebarTrigger */}
           <header className="h-14 shrink-0 border-b border-zinc-800 flex items-center px-3 md:px-4 bg-zinc-950 sticky top-0 z-10">
             <SidebarTrigger className="mr-3 text-zinc-400 hover:text-zinc-100" />
@@ -21,7 +32,7 @@ export function ApiDocsShell({ children, currentRole }: { children: React.ReactN
             </div>
           </header>
 
-          <ScrollArea className="h-[calc(100vh-3.5rem)] w-full">
+          <ScrollArea id="main-scroll" className="h-[calc(100dvh-3.5rem)] w-full">
             <div className="xl:p-6 2xl:p-8">
               {children}
             </div>
