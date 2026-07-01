@@ -7,7 +7,8 @@ export const metadata: Metadata = {
 };
 import { getProjects } from '@/lib/api';
 import { ProjectResponse } from '@rishicodes/shared-types';
-import { ExternalLink, Github, GitBranch, Package, Cpu, FlaskConical, Wrench, AppWindow } from 'lucide-react';
+import { ExternalLink, GitBranch, Package, Cpu, FlaskConical, Wrench, AppWindow } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -98,7 +99,7 @@ export default async function Projects() {
                       <div className="flex items-center gap-4 border-t border-zinc-800/50 pt-4 mt-auto">
                         {project.repoUrl && (
                           <a href={project.repoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-300 transition-colors">
-                            {project.repoUrl.includes('github.com') ? <Github className="w-3.5 h-3.5" /> : <GitBranch className="w-3.5 h-3.5" />}
+                            {project.repoUrl.includes('github.com') ? <FaGithub className="w-3.5 h-3.5" /> : <GitBranch className="w-3.5 h-3.5" />}
                             Code
                           </a>
                         )}
@@ -156,7 +157,7 @@ export default async function Projects() {
                     <div className="flex gap-2">
                       {project.repoUrl && (
                         <a href={project.repoUrl} target="_blank" rel="noreferrer" className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/50 text-zinc-400 hover:text-zinc-300 transition-colors">
-                          <Github className="w-4 h-4" />
+                          <FaGithub className="w-4 h-4" />
                         </a>
                       )}
                       {project.liveUrl && (

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
 import { type ProjectResponse } from '@rishicodes/shared-types';
 
 export function FlagshipCard({ project, index }: { project: ProjectResponse; index: number }) {
@@ -52,7 +53,7 @@ export function FlagshipCard({ project, index }: { project: ProjectResponse; ind
         <div className={`flex items-center gap-4 ${!isEven ? 'lg:justify-end' : ''}`}>
           {project.repoUrl && (
             <a href={project.repoUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-              <Github className="h-5 w-5" />
+              <FaGithub className="h-5 w-5" />
             </a>
           )}
           {project.liveUrl && (

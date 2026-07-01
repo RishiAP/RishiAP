@@ -1,6 +1,7 @@
 import React from 'react';
 import { getProjectEnriched } from '@/lib/api';
-import { Github, GitBranch, ExternalLink, Star, GitFork, Package, ArrowLeft } from 'lucide-react';
+import { GitBranch, ExternalLink, Star, GitFork, Package, ArrowLeft } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
@@ -208,7 +209,7 @@ export default async function ProjectDetailPage({
         <div className="flex flex-wrap items-center gap-x-6 gap-y-4 mb-8">
           {project.repoUrl && (
             <a href={project.repoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors">
-              {project.repoUrl.includes('github.com') ? <Github className="w-4 h-4" /> : <GitBranch className="w-4 h-4" />}
+              {project.repoUrl.includes('github.com') ? <FaGithub className="w-4 h-4" /> : <GitBranch className="w-4 h-4" />}
               Source Code
             </a>
           )}
@@ -259,7 +260,7 @@ export default async function ProjectDetailPage({
             <div className="flex flex-wrap items-center gap-3 pt-1">
               {githubMeta.lastPushed && (
                 <div className="text-xs text-zinc-500 flex items-center gap-1.5 mr-1">
-                  <Github className="w-3.5 h-3.5" />
+                  <FaGithub className="w-3.5 h-3.5" />
                   Updated {formatDate(githubMeta.lastPushed)}
                 </div>
               )}

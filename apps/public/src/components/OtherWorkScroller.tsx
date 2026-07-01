@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Folder, ExternalLink, Github } from 'lucide-react';
+import { Folder, ExternalLink } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
 import { type ProjectResponse } from '@rishicodes/shared-types';
 
 export function OtherWorkScroller({ projects }: { projects: ProjectResponse[] }) {
@@ -24,7 +25,7 @@ export function OtherWorkScroller({ projects }: { projects: ProjectResponse[] })
               <div className="flex gap-3">
                 {project.repoUrl && (
                   <a href={project.repoUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                    <Github className="h-5 w-5" />
+                    <FaGithub className="h-5 w-5" />
                   </a>
                 )}
                 {project.liveUrl && (

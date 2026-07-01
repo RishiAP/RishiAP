@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
-import { Github, Twitter, Linkedin, Mail, ArrowRight, GitCommit, Star } from 'lucide-react';
+import { ArrowRight, GitCommit, Star } from 'lucide-react';
+import { FaGithub, FaXTwitter, FaLinkedin } from 'react-icons/fa6';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 
@@ -71,15 +72,15 @@ export function HeroSection({ stressRepo, parkingRepo }: HeroSectionProps) {
             
             <div className="flex items-center gap-4 ml-4">
               <a href="https://github.com/RishiAP" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Github className="h-6 w-6" />
+                <FaGithub className="h-6 w-6" />
                 <span className="sr-only">GitHub</span>
               </a>
               <a href="https://twitter.com/rishicodes" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Twitter className="h-6 w-6" />
+                <FaXTwitter className="h-6 w-6" />
                 <span className="sr-only">Twitter</span>
               </a>
               <a href="https://linkedin.com/in/rishiap" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Linkedin className="h-6 w-6" />
+                <FaLinkedin className="h-6 w-6" />
                 <span className="sr-only">LinkedIn</span>
               </a>
             </div>
