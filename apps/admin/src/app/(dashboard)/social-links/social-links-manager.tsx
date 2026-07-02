@@ -32,6 +32,17 @@ import {
 } from "@/components/ui/select";
 import { SortableTable, SortableTableRow } from '@/components/ui/sortable-table';
 import { Switch } from '@/components/ui/switch';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const platformOptions = [
   { value: 'github', label: 'GitHub' },
@@ -47,6 +58,7 @@ export function SocialLinksManager({ initialData }: { initialData: SocialLinkRes
   const [items, setItems] = useState(initialData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingLink, setDeletingLink] = useState<SocialLinkResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -151,8 +163,14 @@ export function SocialLinksManager({ initialData }: { initialData: SocialLinkRes
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!window.confirm('Are you sure you want to delete this link?')) return;
+  function handleDeleteClick(link: SocialLinkResponse) {
+    setDeletingLink(link);
+  }
+
+  async function confirmDelete() {
+    if (!deletingLink) return;
+    const id = deletingLink.id;
+    setDeletingLink(null);
     toast.promise(
       fetchApi(`/v1/social-links/${id}`, { method: 'DELETE' }).then(() => {
         setIsModalOpen(false);
@@ -249,10 +267,9 @@ export function SocialLinksManager({ initialData }: { initialData: SocialLinkRes
                             <Pencil className="h-4 w-4" />
                           </Button>
                           <Button 
-                            variant="ghost" 
+                            variant="ghost-destructive" 
                             size="icon" 
-                            className="text-destructive"
-                            onClick={() => handleDelete(link.id)}
+                            onClick={() => handleDeleteClick(link)}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -344,6 +361,26 @@ export function SocialLinksManager({ initialData }: { initialData: SocialLinkRes
           </form>
         </Form>
       </CustomModal>
+
+      <AlertDialog open={!!deletingLink} onOpenChange={(open) => !open && setDeletingLink(null)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-red-500 dark:bg-destructive/20 dark:text-red-400 size-12">
+              <Trash2 className="size-6" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete Social Link?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete your <span className="text-red-500 dark:text-red-400 font-semibold capitalize">{deletingLink?.platform}</span> link? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} variant="destructive">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

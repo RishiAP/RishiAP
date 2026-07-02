@@ -111,11 +111,15 @@ export function ImageUpload({ value, onChange, className }: ImageUploadProps) {
             <div className="relative rounded-lg overflow-hidden border border-zinc-800 group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={preview} alt="Preview" className="w-full h-auto" />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <Button type="button" variant="destructive" size="sm" onClick={clearSelection}>
-                  <X className="w-4 h-4 mr-2" /> Remove Image
-                </Button>
-              </div>
+              <Button 
+                type="button" 
+                variant="destructive" 
+                size="sm" 
+                onClick={clearSelection}
+                className="absolute top-2 right-2 shadow-sm"
+              >
+                <X className="w-4 h-4 mr-2" /> Remove
+              </Button>
             </div>
           )}
         </TabsContent>

@@ -105,7 +105,7 @@ export function ProjectsTableClient({ initialData }: { initialData: ProjectRespo
                   </TableCell>
                   <TableCell className="text-right">
                     <Link href={`/projects/${project.slug}/edit`}>
-                      <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button variant="ghost" size="icon">
                         <Pencil className="h-4 w-4" />
                       </Button>
                     </Link>

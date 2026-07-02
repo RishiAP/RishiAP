@@ -22,6 +22,17 @@ import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusCircle, Pencil, FolderPlus, Trash2, GripVertical, Loader2 } from 'lucide-react';
 import { CustomModal } from '@/components/ui/custom-modal';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -40,7 +51,7 @@ interface Category extends UpdateSkillCategoryDto {
 
 // --- Sortable Components ---
 
-function SortableCategory({ category, children, onEdit }: { category: Category, children: React.ReactNode, onEdit: () => void }) {
+function SortableCategory({ category, children, onEdit, onDelete }: { category: Category, children: React.ReactNode, onEdit: () => void, onDelete: () => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: category.id,
     data: { type: 'Category', category }
@@ -66,6 +77,9 @@ function SortableCategory({ category, children, onEdit }: { category: Category, 
               <Button variant="ghost" size="icon" onClick={onEdit} className="h-6 w-6 text-muted-foreground">
                 <Pencil className="h-3 w-3" />
               </Button>
+              <Button variant="ghost-destructive" size="icon" onClick={onDelete} className="h-6 w-6">
+                <Trash2 className="h-3 w-3" />
+              </Button>
             </CardTitle>
             <CardDescription className="mt-1">
               {category.skills.length} skills
@@ -80,7 +94,7 @@ function SortableCategory({ category, children, onEdit }: { category: Category, 
   );
 }
 
-function SortableSkillRow({ skill, onEdit }: { skill: Skill, onEdit: () => void }) {
+function SortableSkillRow({ skill, onEdit, onDelete }: { skill: Skill, onEdit: () => void, onDelete: () => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: skill.id,
     data: { type: 'Skill', skill }
@@ -103,9 +117,12 @@ function SortableSkillRow({ skill, onEdit }: { skill: Skill, onEdit: () => void 
       </TableCell>
       <TableCell className="font-medium">{skill.name}</TableCell>
       <TableCell className="text-muted-foreground">{skill.field}</TableCell>
-      <TableCell className="text-right">
-        <Button variant="ghost" size="icon" onClick={onEdit} className="opacity-0 group-hover:opacity-100 transition-opacity">
+      <TableCell className="text-right space-x-2">
+        <Button variant="ghost" size="icon" onClick={onEdit}>
           <Pencil className="h-4 w-4" />
+        </Button>
+        <Button variant="ghost-destructive" size="icon" onClick={onDelete}>
+          <Trash2 className="h-4 w-4" />
         </Button>
       </TableCell>
     </TableRow>
@@ -128,6 +145,8 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
 
   const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
   const [editingSkillId, setEditingSkillId] = useState<string | null>(null);
+  const [deletingCategory, setDeletingCategory] = useState<{id: string, name: string} | null>(null);
+  const [deletingSkill, setDeletingSkill] = useState<{id: string, name: string} | null>(null);
 
   const categoryForm = useForm<z.input<typeof CreateSkillCategorySchema>, any, CreateSkillCategoryDto>({
     resolver: zodResolver(CreateSkillCategorySchema),
@@ -228,8 +247,14 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
     }
   }
 
-  async function handleCategoryDelete(id: string) {
-    if (!window.confirm('Delete this category and all its skills?')) return;
+  function handleCategoryDeleteClick(id: string, name: string) {
+    setDeletingCategory({ id, name });
+  }
+
+  async function confirmCategoryDelete() {
+    if (!deletingCategory) return;
+    const id = deletingCategory.id;
+    setDeletingCategory(null);
     
     toast.promise(
       fetchApi(`/admin/skills/categories/${id}`, { method: 'DELETE' }).then(() => {
@@ -279,8 +304,14 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
     }
   }
 
-  async function handleSkillDelete(id: string) {
-    if (!window.confirm('Delete this skill?')) return;
+  function handleSkillDeleteClick(id: string, name: string) {
+    setDeletingSkill({ id, name });
+  }
+
+  async function confirmSkillDelete() {
+    if (!deletingSkill) return;
+    const id = deletingSkill.id;
+    setDeletingSkill(null);
     
     toast.promise(
       fetchApi(`/admin/skills/items/${id}`, { method: 'DELETE' }).then(() => {
@@ -319,7 +350,7 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
           ) : (
             <SortableContext items={categories.map(c => c.id)} strategy={verticalListSortingStrategy}>
               {categories.map((category) => (
-                <SortableCategory key={category.id} category={category} onEdit={() => openCategoryEdit(category)}>
+                <SortableCategory key={category.id} category={category} onEdit={() => openCategoryEdit(category)} onDelete={() => handleCategoryDeleteClick(category.id, category.name || '')}>
                   <div className="mt-4 rounded-md border">
                     <Table className="min-w-[800px]">
                       <TableHeader>
@@ -338,7 +369,7 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
                         ) : (
                           <SortableContext items={category.skills.map(s => s.id)} strategy={verticalListSortingStrategy}>
                             {category.skills.map((skill) => (
-                              <SortableSkillRow key={skill.id} skill={skill} onEdit={() => openSkillEdit(skill)} />
+                              <SortableSkillRow key={skill.id} skill={skill} onEdit={() => openSkillEdit(skill)} onDelete={() => handleSkillDeleteClick(skill.id, skill.name || '')} />
                             ))}
                           </SortableContext>
                         )}
@@ -359,8 +390,7 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
             <FormField control={categoryForm.control} name="name" render={({ field }) => (
               <FormItem><FormLabel>Category Name</FormLabel><FormControl><Input placeholder="e.g. Core Skills, Backend..." {...field} /></FormControl><FormMessage /></FormItem>
             )} />
-            <div className="flex justify-between gap-4 pt-4 border-t">
-              {editingCategoryId ? <Button type="button" variant="destructive" onClick={() => handleCategoryDelete(editingCategoryId)} disabled={isSubmitting}><Trash2 className="w-4 h-4 mr-2" /> Delete</Button> : <div />}
+            <div className="flex justify-end gap-2 pt-4 border-t">
               <div className="flex gap-2">
                 <Button type="button" variant="outline" onClick={() => setIsCategoryModalOpen(false)} disabled={isSubmitting}>Cancel</Button>
                 <Button type="submit" disabled={isSubmitting || !categoryForm.formState.isDirty}>
@@ -393,8 +423,7 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
                 <FormItem><FormLabel>Field Tag</FormLabel><FormControl><Input placeholder="e.g. languages, tools" {...field} /></FormControl><FormMessage /></FormItem>
               )} />
             </div>
-            <div className="flex justify-between gap-4 pt-4 border-t">
-              {editingSkillId ? <Button type="button" variant="destructive" onClick={() => handleSkillDelete(editingSkillId)} disabled={isSubmitting}><Trash2 className="w-4 h-4 mr-2" /> Delete</Button> : <div />}
+            <div className="flex justify-end gap-2 pt-4 border-t">
               <div className="flex gap-2">
                 <Button type="button" variant="outline" onClick={() => setIsSkillModalOpen(false)} disabled={isSubmitting}>Cancel</Button>
                 <Button type="submit" disabled={isSubmitting || !skillForm.formState.isDirty}>
@@ -405,6 +434,46 @@ export function SkillsManager({ initialData }: { initialData: Category[] }) {
           </form>
         </Form>
       </CustomModal>
+
+      <AlertDialog open={!!deletingCategory} onOpenChange={(open) => !open && setDeletingCategory(null)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-red-500 dark:bg-destructive/20 dark:text-red-400 size-12">
+              <Trash2 className="size-6" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete Category?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete the <span className="text-red-500 dark:text-red-400 font-semibold">{deletingCategory?.name}</span> category? This will permanently delete this category and all its associated skills.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmCategoryDelete} variant="destructive">
+              Delete Category
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!deletingSkill} onOpenChange={(open) => !open && setDeletingSkill(null)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-red-500 dark:bg-destructive/20 dark:text-red-400 size-12">
+              <Trash2 className="size-6" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete Skill?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete the skill <span className="text-red-500 dark:text-red-400 font-semibold">{deletingSkill?.name}</span>? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmSkillDelete} variant="destructive">
+              Delete Skill
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

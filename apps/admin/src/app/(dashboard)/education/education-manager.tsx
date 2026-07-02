@@ -27,12 +27,24 @@ import {
 } from '@/components/ui/form';
 import { MonthYearPicker } from '@/components/ui/month-year-picker';
 import { SortableTable, SortableTableRow } from '@/components/ui/sortable-table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export function EducationManager({ initialData }: { initialData: EducationResponse[] }) {
   const router = useRouter();
   const [items, setItems] = useState(initialData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingItem, setDeletingItem] = useState<EducationResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -132,8 +144,14 @@ export function EducationManager({ initialData }: { initialData: EducationRespon
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!window.confirm('Are you sure you want to delete this education entry?')) return;
+  function handleDeleteClick(item: EducationResponse) {
+    setDeletingItem(item);
+  }
+
+  async function confirmDelete() {
+    if (!deletingItem) return;
+    const id = deletingItem.id;
+    setDeletingItem(null);
     toast.promise(
       fetchApi(`/admin/education/${id}`, { method: 'DELETE' }).then(() => {
         setIsModalOpen(false);
@@ -198,13 +216,20 @@ export function EducationManager({ initialData }: { initialData: EducationRespon
                         <TableCell className="text-muted-foreground">
                           {edu.startDate} – {edu.endDate || 'Present'}
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right space-x-2">
                           <Button 
                             variant="ghost" 
                             size="icon" 
                             onClick={() => handleOpenEdit(edu)}
                           >
                             <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button 
+                            variant="ghost-destructive" 
+                            size="icon" 
+                            onClick={() => handleDeleteClick(edu)}
+                          >
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </TableCell>
                       </SortableTableRow>
@@ -318,21 +343,7 @@ export function EducationManager({ initialData }: { initialData: EducationRespon
               )}
             />
 
-            <div className="flex justify-between gap-4 pt-4 border-t">
-              {editingId ? (
-                <Button 
-                  type="button" 
-                  variant="destructive" 
-                  onClick={() => handleDelete(editingId)}
-                  disabled={isSubmitting}
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  Delete
-                </Button>
-              ) : (
-                <div /> // Spacer
-              )}
-              <div className="flex gap-2">
+            <div className="flex justify-end gap-2 pt-4 border-t">
                 <Button 
                   type="button" 
                   variant="outline" 
@@ -345,10 +356,29 @@ export function EducationManager({ initialData }: { initialData: EducationRespon
                   {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</> : 'Save'}
                 </Button>
               </div>
-            </div>
           </form>
         </Form>
       </CustomModal>
+
+      <AlertDialog open={!!deletingItem} onOpenChange={(open) => !open && setDeletingItem(null)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-red-500 dark:bg-destructive/20 dark:text-red-400 size-12">
+              <Trash2 className="size-6" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete Education?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete your degree at <span className="text-red-500 dark:text-red-400 font-semibold">{deletingItem?.institution}</span>? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} variant="destructive">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

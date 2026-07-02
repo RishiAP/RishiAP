@@ -17,6 +17,17 @@ import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusCircle, Pencil, Trash2, Loader2 } from 'lucide-react';
 import { CustomModal } from '@/components/ui/custom-modal';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { TagInput } from '@/components/ui/tag-input';
 import {
   Form,
@@ -51,6 +62,7 @@ export function ExperienceManager({ initialData }: { initialData: ExperienceResp
   const [items, setItems] = useState(initialData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingItem, setDeletingItem] = useState<ExperienceResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -157,8 +169,14 @@ export function ExperienceManager({ initialData }: { initialData: ExperienceResp
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!window.confirm('Are you sure you want to delete this experience entry?')) return;
+  function handleDeleteClick(item: ExperienceResponse) {
+    setDeletingItem(item);
+  }
+
+  async function confirmDelete() {
+    if (!deletingItem) return;
+    const id = deletingItem.id;
+    setDeletingItem(null);
     toast.promise(
       fetchApi(`/admin/experience/${id}`, { method: 'DELETE' }).then(() => {
         setIsModalOpen(false);
@@ -246,6 +264,14 @@ export function ExperienceManager({ initialData }: { initialData: ExperienceResp
                             <Button variant="ghost" size="icon" onClick={() => handleOpenEdit(exp)}>
                               <Pencil className="h-4 w-4" />
                             </Button>
+                            <Button 
+                              variant="ghost-destructive" 
+                              size="icon" 
+                              className="h-8 w-8"
+                              onClick={() => handleDeleteClick(exp)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </TableCell>
                         </SortableTableRow>
                       );
@@ -262,21 +288,16 @@ export function ExperienceManager({ initialData }: { initialData: ExperienceResp
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={editingId ? "Edit Experience" : "Add Experience"}
-        description="Enter your role and organization details."
+        description="Fill in the details for your experience entry."
         className="max-w-3xl"
         footer={
-          <div className="flex justify-between gap-4 w-full">
-            {editingId ? (
-              <Button type="button" variant="destructive" onClick={() => handleDelete(editingId)} disabled={isSubmitting}>
-                <Trash2 className="w-4 h-4 mr-2" /> Delete
-              </Button>
-            ) : <div />}
-            <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} disabled={isSubmitting}>Cancel</Button>
-              <Button type="submit" form="experience-form" disabled={isSubmitting || !form.formState.isDirty}>
-                {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</> : 'Save'}
-              </Button>
-            </div>
+          <div className="flex justify-end gap-2 w-full">
+            <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} disabled={isSubmitting}>
+              Cancel
+            </Button>
+            <Button type="submit" onClick={form.handleSubmit(onSubmit)} disabled={isSubmitting || !form.formState.isDirty}>
+              {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...</> : 'Save'}
+            </Button>
           </div>
         }
       >
@@ -450,6 +471,26 @@ export function ExperienceManager({ initialData }: { initialData: ExperienceResp
           </form>
         </Form>
       </CustomModal>
+
+      <AlertDialog open={!!deletingItem} onOpenChange={(open) => !open && setDeletingItem(null)}>
+        <AlertDialogContent size="sm">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-destructive/10 text-red-500 dark:bg-destructive/20 dark:text-red-400 size-12">
+              <Trash2 className="size-6" />
+            </AlertDialogMedia>
+            <AlertDialogTitle>Delete Experience?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete your experience at <span className="text-red-500 dark:text-red-400 font-semibold">{deletingItem?.org}</span>? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete} variant="destructive">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

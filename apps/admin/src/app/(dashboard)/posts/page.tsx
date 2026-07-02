@@ -81,7 +81,7 @@ export default async function PostsPage() {
                       <TableCell className="text-right space-x-2">
 
                         <Link href={`/posts/${post.slug}/edit`}>
-                          <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button variant="ghost" size="icon">
                             <Pencil className="h-4 w-4" />
                           </Button>
                         </Link>
