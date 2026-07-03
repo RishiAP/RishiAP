@@ -189,19 +189,39 @@ export default async function ProjectDetailPage({
           {project.summary}
         </p>
 
-        {/* Tech Stack & Languages */}
-        {(project.techStack?.length > 0 || project.languages?.length > 0) && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.languages?.map((lang: string) => (
-              <span key={lang} className="text-xs font-mono px-2 py-0.5 rounded bg-indigo-900/40 text-indigo-300 border border-indigo-800/50">
-                {lang}
-              </span>
-            ))}
-            {project.techStack?.map((tech: string) => (
-              <span key={tech} className="text-xs font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
-                {tech}
-              </span>
-            ))}
+        {/* Tech Stack, Languages & Topics */}
+        {(project.techStack?.length > 0 || project.languages?.length > 0 || project.topics?.length > 0) && (
+          <div className="flex flex-col gap-3 mb-8">
+            {project.languages?.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mr-1 w-16">Languages</span>
+                {project.languages.map((lang: string) => (
+                  <span key={lang} className="text-xs font-mono px-2 py-0.5 rounded bg-indigo-900/40 text-indigo-300 border border-indigo-800/50">
+                    {lang}
+                  </span>
+                ))}
+              </div>
+            )}
+            {project.techStack?.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mr-1 w-16">Stack</span>
+                {project.techStack.map((tech: string) => (
+                  <span key={tech} className="text-xs font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
+            {project.topics?.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mr-1 w-16">Topics</span>
+                {project.topics.map((topic: string) => (
+                  <span key={topic} className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950/40 text-emerald-300 border border-emerald-900/50">
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

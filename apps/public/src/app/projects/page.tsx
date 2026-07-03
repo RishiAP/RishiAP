@@ -191,7 +191,9 @@ export default async function Projects() {
   id: p.id,
   title: p.title,
   category: p.category,
-  tier: p.tier
+  tier: p.tier,
+  techStack: p.techStack,
+  languages: p.languages
 })), null, 2)}
             </pre>
           </div>

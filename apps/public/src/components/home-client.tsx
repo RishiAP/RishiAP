@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Briefcase, FileText, FolderKanban, Mail, Link as LinkIcon } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
@@ -41,6 +41,17 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
     type: 'project' | 'post' | 'profile'; 
     data?: ProjectResponse | PostResponse | ExperienceResponse | null 
   }>({ type: 'profile' });
+
+  const [displayTime, setDisplayTime] = useState(fetchTimeMs);
+
+  useEffect(() => {
+    if (hoveredItem.type === 'profile') {
+      setDisplayTime(fetchTimeMs);
+    } else {
+      // Simulate a fast API hit response time (12ms - 45ms) for sub-resources
+      setDisplayTime(Math.floor(Math.random() * 33) + 12);
+    }
+  }, [hoveredItem.type, hoveredItem.data?.id, fetchTimeMs]);
   
   // Extract all skills from the nested categories
   const allSkills = skills.flatMap((category: SkillCategory) => category.skills || []);
@@ -97,11 +108,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
           id: p.id,
           title: p.title,
           publishedAt: p.publishedAt,
-          tags: p.tags || [],
-          metrics: {
-            readingTime: Math.ceil((p.excerpt?.length || 200) / 200) + " min",
-            views: 0
-          }
+          tags: p.tags || []
         }
       };
     }
@@ -112,7 +119,18 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
       data: {
         developer: {
           name: "Debjyoti Mondal",
-          handle: "@rishicodes",
+          contacts: socialLinks
+            .filter((link) => link.platform.toLowerCase() !== 'resume')
+            .reduce((acc, link) => {
+              const platform = link.platform.toLowerCase();
+              if (platform === 'email') {
+                acc[platform] = link.url.replace('mailto:', '');
+              } else {
+                const handle = link.url.split('/').filter(Boolean).pop();
+                acc[platform] = handle ? `@${handle}` : link.url;
+              }
+              return acc;
+            }, {} as Record<string, string>),
           currentRole: currentRole,
           activeCompany: company,
           location: "India"
@@ -269,7 +287,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
             <div className="flex items-center justify-between" onMouseEnter={() => setHoveredItem({ type: 'profile' })}>
               <h2 className="text-2xl font-semibold text-zinc-100 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-zinc-500" />
-                Engineering Blog
+                Recent Articles
               </h2>
               <Link href="/blog" className="text-sm text-zinc-400 hover:text-indigo-400 flex items-center gap-1 group transition-colors">
                 View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -277,23 +295,26 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
             </div>
             <div className="space-y-4">
               {publishedPosts.slice(0, 3).map((post) => (
-                <div 
+                <Link 
+                  href={`/blog/${post.slug}`}
                   key={post.id} 
-                  className="flex flex-col sm:flex-row p-6 rounded-2xl border border-zinc-800/50 bg-zinc-900/30 hover:bg-zinc-800/50 hover:border-zinc-700/50 transition-all hover:shadow-xl group relative overflow-hidden"
+                  className="block p-4 sm:p-5 rounded-2xl border border-zinc-800/50 bg-zinc-900/30 hover:bg-zinc-800/50 hover:border-zinc-700/50 transition-all hover:shadow-xl group relative overflow-hidden"
                   onMouseEnter={() => setHoveredItem({ type: 'post', data: post })}
                 >
                   <div className="absolute left-0 top-0 w-1 h-full bg-emerald-500/20 group-hover:bg-emerald-500/50 transition-colors" />
-                  <div className="flex-1 flex flex-col justify-center pl-2">
-                    <Link href={`/blog/${post.slug}`}>
-                      <h3 className="font-medium text-zinc-200 group-hover:text-indigo-400 transition-colors text-lg mb-2">{post.title}</h3>
-                    </Link>
-                    <p className="text-sm text-zinc-500 line-clamp-2 max-w-2xl">{post.excerpt}</p>
-                    <div className="mt-4 text-xs font-mono text-zinc-600 inline-flex items-center w-fit bg-zinc-950/50 px-3 py-1.5 rounded-lg border border-zinc-800/50">
-                      <FileText className="w-3 h-3 mr-2" />
-                      {formatDate(post.publishedAt || post.createdAt)}
+                  <div className="flex flex-col justify-center pl-3">
+                    <div className={`flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4 ${post.excerpt ? 'mb-1.5' : ''}`}>
+                      <h3 className="font-medium text-zinc-200 group-hover:text-indigo-400 transition-colors text-lg leading-tight">{post.title}</h3>
+                      <div className="flex items-center text-xs font-mono text-zinc-500 whitespace-nowrap shrink-0 sm:mt-1">
+                        <FileText className="w-3 h-3 mr-1.5 opacity-50" />
+                        {formatDate(post.publishedAt || post.createdAt)}
+                      </div>
                     </div>
+                    {post.excerpt && (
+                      <p className="text-sm text-zinc-400/90 line-clamp-2 leading-relaxed">{post.excerpt}</p>
+                    )}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </section>
@@ -319,7 +340,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
             <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Response</div>
             <div className="text-xs font-mono text-emerald-400 flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              200 OK • {fetchTimeMs}ms
+              200 OK • {displayTime}ms
             </div>
           </div>
           <div className="relative">

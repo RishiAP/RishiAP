@@ -66,6 +66,7 @@ export class PostsService {
         slug: true,
         excerpt: true,
         coverUrl: true,
+        published: true,
         publishedAt: true,
         tags: true,
         updatedAt: true,
