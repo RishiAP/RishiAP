@@ -87,11 +87,12 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
           category: p.category,
           techStack: p.techStack,
           languages: p.languages,
-          metrics: {
-            stars: 0,
-            views: 0
-          },
-          status: p.published ? "Live" : "Development",
+          status: p.published 
+            ? (p.category === 'PACKAGE' || p.category === 'LIBRARY' ? "Published" 
+               : p.category === 'EXPERIMENT' ? "Completed" 
+               : p.category === 'FIRMWARE' ? "Stable"
+               : "Live") 
+            : "Development",
           links: {
             liveUrl: p.liveUrl,
             repoUrl: p.repoUrl

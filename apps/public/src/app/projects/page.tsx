@@ -62,10 +62,10 @@ export default async function Projects() {
             
             <div className="grid sm:grid-cols-2 gap-6">
               {flagshipProjects.map((project: ProjectResponse) => (
-                <div key={project.id} className="group flex flex-col bg-zinc-900/30 border border-zinc-800/50 rounded-2xl overflow-hidden hover:bg-zinc-800/40 hover:border-zinc-700/50 hover:-translate-y-1 transition-all hover:shadow-2xl">
+                <div key={project.id} className="group relative flex flex-col bg-zinc-900/30 border border-zinc-800/50 rounded-2xl overflow-hidden hover:bg-zinc-800/40 hover:border-zinc-700/50 hover:-translate-y-1 transition-all hover:shadow-2xl">
                   <div className="p-5 sm:p-6 flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-2">
-                      <Link href={`/projects/${project.slug}`}>
+                      <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:z-0">
                         <h3 className="text-xl font-semibold text-zinc-100 group-hover:text-indigo-400 transition-colors">
                           {project.title}
                         </h3>
@@ -96,7 +96,7 @@ export default async function Projects() {
                         </div>
                       )}
                       
-                      <div className="flex items-center gap-4 border-t border-zinc-800/50 pt-4 mt-auto">
+                      <div className="flex items-center gap-4 border-t border-zinc-800/50 pt-4 mt-auto relative z-10">
                         {project.repoUrl && (
                           <a href={project.repoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-300 transition-colors">
                             {project.repoUrl.includes('github.com') ? <FaGithub className="w-3.5 h-3.5" /> : <GitBranch className="w-3.5 h-3.5" />}
@@ -107,6 +107,12 @@ export default async function Projects() {
                           <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
                             <ExternalLink className="w-3.5 h-3.5" />
                             Live Demo
+                          </a>
+                        )}
+                        {project.packageUrl && (
+                          <a href={project.packageUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs font-medium text-amber-400 hover:text-amber-300 transition-colors">
+                            <Package className="w-3.5 h-3.5" />
+                            {project.packageRegistry || 'Package'}
                           </a>
                         )}
                       </div>
@@ -131,10 +137,10 @@ export default async function Projects() {
 
             <div className="grid gap-4">
               {supportingProjects.map((project: ProjectResponse) => (
-                <div key={project.id} className="group flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-zinc-900/20 border border-zinc-800/40 rounded-xl hover:bg-zinc-800/40 hover:border-zinc-700/50 transition-colors">
+                <div key={project.id} className="group relative flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-zinc-900/20 border border-zinc-800/40 rounded-xl hover:bg-zinc-800/40 hover:border-zinc-700/50 transition-colors">
                   <div className="max-w-xl mb-4 sm:mb-0">
                     <div className="flex items-center gap-3 mb-1">
-                      <Link href={`/projects/${project.slug}`}>
+                      <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:z-0">
                         <h3 className="text-lg font-medium text-zinc-200 group-hover:text-indigo-400 transition-colors">
                           {project.title}
                         </h3>
@@ -154,7 +160,7 @@ export default async function Projects() {
                         {tech}
                       </span>
                     ))}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 relative z-10">
                       {project.repoUrl && (
                         <a href={project.repoUrl} target="_blank" rel="noreferrer" className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/50 text-zinc-400 hover:text-zinc-300 transition-colors">
                           <FaGithub className="w-4 h-4" />
@@ -163,6 +169,11 @@ export default async function Projects() {
                       {project.liveUrl && (
                         <a href={project.liveUrl} target="_blank" rel="noreferrer" className="p-2 rounded-lg bg-indigo-950/30 border border-indigo-900/30 text-indigo-400 hover:text-indigo-300 transition-colors">
                           <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                      {project.packageUrl && (
+                        <a href={project.packageUrl} target="_blank" rel="noreferrer" className="p-2 rounded-lg bg-amber-950/30 border border-amber-900/30 text-amber-400 hover:text-amber-300 transition-colors" title={project.packageRegistry || 'Package'}>
+                          <Package className="w-4 h-4" />
                         </a>
                       )}
                     </div>
