@@ -120,6 +120,9 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
       data: {
         developer: {
           name: "Debjyoti Mondal",
+          currentRole: currentRole,
+          activeCompany: company,
+          location: "India",
           contacts: socialLinks
             .filter((link) => link.platform.toLowerCase() !== 'resume')
             .reduce((acc, link) => {
@@ -131,10 +134,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
                 acc[platform] = handle ? `@${handle}` : link.url;
               }
               return acc;
-            }, {} as Record<string, string>),
-          currentRole: currentRole,
-          activeCompany: company,
-          location: "India"
+            }, {} as Record<string, string>)
         },
         metrics: {
           publishedProjects: publishedProjects.length,
