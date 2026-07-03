@@ -1,10 +1,16 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { getEducation } from '@/lib/api';
 import { EducationTable } from '@/components/EducationTable';
 
-export const metadata = {
-  title: 'Education | Rishi',
-  description: 'My educational background and qualifications.',
+export const metadata: Metadata = {
+  title: 'Education',
+  description: 'My academic background, degrees, certifications, and educational qualifications.',
+  openGraph: {
+    title: 'Education & Qualifications',
+    description: 'My academic background, degrees, certifications, and educational qualifications.',
+    type: 'website',
+  },
 };
 
 export default async function EducationPage() {

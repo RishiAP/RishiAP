@@ -1,10 +1,16 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { getExperience } from '@/lib/api';
 import { ExperienceList } from '@/components/ExperienceList';
 
-export const metadata = {
-  title: 'Experience | Rishi',
-  description: 'My professional experience, internships, and open-source contributions.',
+export const metadata: Metadata = {
+  title: 'Experience',
+  description: 'My professional experience, career history, internships, and open-source contributions.',
+  openGraph: {
+    title: 'Professional Experience',
+    description: 'My professional experience, career history, internships, and open-source contributions.',
+    type: 'website',
+  },
 };
 
 export default async function ExperiencePage() {

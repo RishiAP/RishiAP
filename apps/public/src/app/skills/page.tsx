@@ -1,5 +1,16 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { getSkills, type SkillCategory, type Skill } from '@/lib/api';
+
+export const metadata: Metadata = {
+  title: 'Skills & Technologies',
+  description: 'A comprehensive overview of my technical skills, programming languages, frameworks, and tools I use to build scalable applications.',
+  openGraph: {
+    title: 'Skills & Technologies',
+    description: 'A comprehensive overview of my technical skills, programming languages, frameworks, and tools I use to build scalable applications.',
+    type: 'website',
+  },
+};
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default async function Skills() {
