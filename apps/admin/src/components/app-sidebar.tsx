@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { UserButton } from '@clerk/nextjs';
+import { useUser, SignOutButton, useClerk } from '@clerk/nextjs';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -11,7 +11,18 @@ import {
   GraduationCap,
   Briefcase,
   Command,
+  ChevronsUpDown,
+  LogOut,
+  Settings,
 } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Sidebar,
   SidebarContent,
@@ -39,6 +50,8 @@ const navItems = [
 export function AppSidebar() {
   const pathname = usePathname();
   const { setOpenMobile, isMobile } = useSidebar();
+  const { user } = useUser();
+  const { openUserProfile } = useClerk();
 
   const handleLinkClick = () => {
     if (isMobile) {
@@ -99,21 +112,73 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:!justify-center">
-              <UserButton
-                afterSignOutUrl="/sign-in"
-                appearance={{
-                  elements: {
-                    avatarBox: 'h-8 w-8',
-                    rootBox: 'flex shrink-0'
-                  },
-                }}
-              />
-              <div className="grid flex-1 text-left text-sm leading-tight ml-1 group-data-[collapsible=icon]:hidden">
-                <span className="truncate font-semibold">Rishi</span>
-                <span className="truncate text-xs text-muted-foreground">Admin</span>
-              </div>
-            </SidebarMenuButton>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:!justify-center"
+                >
+                  <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-full overflow-hidden border border-zinc-800 bg-zinc-900">
+                    {user?.imageUrl ? (
+                      <img src={user.imageUrl} alt={user.fullName || 'User'} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs font-semibold">{user?.firstName?.charAt(0) || 'A'}</span>
+                    )}
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight ml-1 group-data-[collapsible=icon]:hidden">
+                    <span className="truncate font-semibold">{user?.fullName || 'Admin'}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {user?.primaryEmailAddress?.emailAddress || 'admin@rishicodes.com'}
+                    </span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-zinc-950 border-zinc-800 text-zinc-300"
+                side={isMobile ? "bottom" : "right"}
+                align="end"
+                sideOffset={4}
+              >
+                <DropdownMenuLabel className="p-0 font-normal">
+                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                    <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-full overflow-hidden border border-zinc-800">
+                      {user?.imageUrl ? (
+                        <img src={user.imageUrl} alt={user.fullName || 'User'} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-xs font-semibold">{user?.firstName?.charAt(0) || 'A'}</span>
+                      )}
+                    </div>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-semibold">{user?.fullName || 'Admin'}</span>
+                      <span className="truncate text-xs text-muted-foreground">
+                        {user?.primaryEmailAddress?.emailAddress || 'admin@rishicodes.com'}
+                      </span>
+                    </div>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-zinc-800" />
+                <DropdownMenuItem 
+                  className="cursor-pointer focus:bg-zinc-900 focus:text-zinc-100"
+                  onClick={() => {
+                    if (isMobile) {
+                      setOpenMobile(false);
+                    }
+                    openUserProfile();
+                  }}
+                >
+                  <Settings className="mr-2 size-4" />
+                  Manage Account
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-zinc-800" />
+                <SignOutButton>
+                  <DropdownMenuItem className="cursor-pointer focus:bg-zinc-900 focus:text-zinc-100">
+                    <LogOut className="mr-2 size-4" />
+                    Sign out
+                  </DropdownMenuItem>
+                </SignOutButton>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
