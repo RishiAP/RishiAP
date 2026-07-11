@@ -5,8 +5,7 @@ import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { MarkdownRenderer } from '@/components/ui/markdown-renderer';
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -332,8 +331,8 @@ export default async function ProjectDetailPage({
         {/* General Description */}
         {project.description && (
           <div className="mt-8">
-            <div className="prose prose-invert prose-zinc max-w-none">
-              <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">{project.description}</p>
+            <div className="prose prose-invert prose-zinc max-w-none prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+              <MarkdownRenderer content={project.description} />
             </div>
           </div>
         )}
@@ -357,8 +356,8 @@ export default async function ProjectDetailPage({
                 <h2 className="text-lg font-semibold text-zinc-200 mb-4 font-mono">
                   <span className="text-indigo-400">README.md</span>
                 </h2>
-                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
+                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-lg [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                  <MarkdownRenderer content={readme} />
                 </div>
               </>
             ) : (
@@ -367,8 +366,8 @@ export default async function ProjectDetailPage({
                   <span className="text-indigo-400 mr-2">▸</span>
                   README.md
                 </summary>
-                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
+                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-lg [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                  <MarkdownRenderer content={readme} />
                 </div>
               </details>
             )}

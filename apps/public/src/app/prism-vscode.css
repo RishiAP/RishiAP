@@ -1,0 +1,137 @@
+/* Custom Prism.js Theme based on your globals.css VS Code Dark+ variables */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #d4d4d4;
+  text-shadow: none;
+  font-family: var(--font-mono), Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: transparent;
+}
+
+/* Token Colors mapped to globals.css */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--color-syn-comment, #6a9955);
+}
+
+.token.punctuation {
+  color: var(--color-syn-operator, #d4d4d4);
+}
+
+.token.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--color-syn-number, #b5cea8);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--color-syn-string, #ce9178);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--color-syn-operator, #d4d4d4);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--color-syn-keyword, #569cd6);
+}
+
+.token.control {
+  color: var(--color-syn-control, #c586c0);
+}
+
+.token.function {
+  color: var(--color-syn-function, #dcdcaa);
+}
+
+.token.class-name,
+.token.type {
+  color: var(--color-syn-type, #4ec9b0);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--color-syn-variable, #9cdcfe);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* rehype-prism-plus specific line highlighting */
+.code-highlight {
+  display: block;
+}
+.code-line {
+  display: block;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border-left: 4px solid transparent;
+}
+.code-line.inserted {
+  background-color: rgba(16, 185, 129, 0.2); /* Emerald */
+}
+.code-line.deleted {
+  background-color: rgba(239, 68, 68, 0.2); /* Red */
+}
+.highlight-line {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--color-primary, #6366f1);
+}

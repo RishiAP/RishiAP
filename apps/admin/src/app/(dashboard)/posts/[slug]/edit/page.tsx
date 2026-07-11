@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { UpdatePostSchema, type UpdatePostDto, type PostResponse } from '@rishicodes/shared-types';
 import { fetchApiAction as fetchApi } from '@/lib/actions';
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, FileX2 } from 'lucide-react';
+import Link from 'next/link';
 
 import { useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
@@ -54,8 +55,11 @@ export default function EditPostPage() {
   const postSlug = params.slug as string;
 
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const [initialJson, setInitialJson] = useState<string | null>(null);
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -115,6 +119,7 @@ export default function EditPostPage() {
         }
       } catch (err: any) {
         console.error(err);
+        setLoadError(err.message || 'Post not found');
         toast.error('Failed to load post', { description: err.message });
       } finally {
         loadTime.current = Date.now();
@@ -168,15 +173,17 @@ export default function EditPostPage() {
 
   async function onDelete() {
     try {
-      setIsSubmitting(true);
+      setIsDeleting(true);
       await fetchApi(`/admin/posts/${postSlug}`, { method: 'DELETE' });
+      setDeleteDialogOpen(false);
+      toast.success('Post deleted successfully');
       router.push('/posts');
       router.refresh();
-      toast.success('Post deleted successfully');
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to delete post', { description: err.message });
-      setIsSubmitting(false);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -184,6 +191,23 @@ export default function EditPostPage() {
     return (
       <div className="flex h-[400px] items-center justify-center">
         <p className="text-muted-foreground animate-pulse">Loading post...</p>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="flex h-[400px] items-center justify-center">
+        <div className="text-center space-y-4">
+          <FileX2 className="mx-auto h-12 w-12 text-muted-foreground" />
+          <h2 className="text-xl font-semibold text-foreground">Post Not Found</h2>
+          <p className="text-muted-foreground max-w-sm">
+            The post <strong className="font-mono">{postSlug}</strong> does not exist or could not be loaded.
+          </p>
+          <Link href="/posts">
+            <Button variant="outline">← Back to Posts</Button>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -365,9 +389,9 @@ export default function EditPostPage() {
           Once you delete a post, there is no going back. This action will permanently remove the post.
         </p>
         
-        <Dialog>
+        <Dialog open={deleteDialogOpen} onOpenChange={(open) => { setDeleteDialogOpen(open); if (!open) setDeleteConfirmText(''); }}>
           <DialogTrigger asChild>
-            <Button variant="destructive" disabled={isSubmitting}>
+            <Button variant="destructive" disabled={isSubmitting || isDeleting}>
               Delete Post
             </Button>
           </DialogTrigger>
@@ -393,10 +417,10 @@ export default function EditPostPage() {
               <Button 
                 variant="destructive" 
                 onClick={onDelete} 
-                disabled={deleteConfirmText !== form.getValues('title') || isSubmitting}
+                disabled={deleteConfirmText !== form.getValues('title') || isDeleting}
                 className="w-full sm:w-auto"
               >
-                {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...</> : 'I understand, delete this post'}
+                {isDeleting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...</> : 'I understand, delete this post'}
               </Button>
             </DialogFooter>
           </DialogContent>

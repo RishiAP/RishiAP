@@ -8,7 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { UpdateProjectSchema, type UpdateProjectDto, type ProjectResponse } from '@rishicodes/shared-types';
 import { fetchApiAction as fetchApi } from '@/lib/actions';
 import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
+import { Loader2, FileX2 } from 'lucide-react';
+import Link from 'next/link';
 
 import { useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
@@ -61,8 +62,11 @@ export default function EditProjectPage() {
   const projectSlug = params.slug as string;
 
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const form = useForm<z.input<typeof UpdateProjectSchema>, any, UpdateProjectDto>({
     resolver: zodResolver(UpdateProjectSchema),
@@ -131,6 +135,7 @@ export default function EditProjectPage() {
 
       } catch (err: any) {
         console.error(err);
+        setLoadError(err.message || 'Project not found');
         toast.error('Failed to load project', { description: err.message });
       } finally {
         setIsLoading(false);
@@ -201,15 +206,17 @@ export default function EditProjectPage() {
 
   async function onDelete() {
     try {
-      setIsSubmitting(true);
+      setIsDeleting(true);
       await fetchApi(`/admin/projects/${projectSlug}`, { method: 'DELETE' });
+      setDeleteDialogOpen(false);
+      toast.success('Project deleted successfully');
       router.push('/projects');
       router.refresh();
-      toast.success('Project deleted successfully');
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to delete project', { description: err.message });
-      setIsSubmitting(false);
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -217,6 +224,23 @@ export default function EditProjectPage() {
     return (
       <div className="flex h-[400px] items-center justify-center">
         <p className="text-muted-foreground animate-pulse">Loading project...</p>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="flex h-[400px] items-center justify-center">
+        <div className="text-center space-y-4">
+          <FileX2 className="mx-auto h-12 w-12 text-muted-foreground" />
+          <h2 className="text-xl font-semibold text-foreground">Project Not Found</h2>
+          <p className="text-muted-foreground max-w-sm">
+            The project <strong className="font-mono">{projectSlug}</strong> does not exist or could not be loaded.
+          </p>
+          <Link href="/projects">
+            <Button variant="outline">← Back to Projects</Button>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -693,9 +717,9 @@ export default function EditProjectPage() {
           Once you delete a project, there is no going back. This action will permanently remove the project and all associated data.
         </p>
         
-        <Dialog>
+        <Dialog open={deleteDialogOpen} onOpenChange={(open) => { setDeleteDialogOpen(open); if (!open) setDeleteConfirmText(''); }}>
           <DialogTrigger asChild>
-            <Button variant="destructive" disabled={isSubmitting}>
+            <Button variant="destructive" disabled={isSubmitting || isDeleting}>
               Delete Project
             </Button>
           </DialogTrigger>
@@ -721,10 +745,10 @@ export default function EditProjectPage() {
               <Button 
                 variant="destructive" 
                 onClick={onDelete} 
-                disabled={deleteConfirmText !== form.getValues('title') || isSubmitting}
+                disabled={deleteConfirmText !== form.getValues('title') || isDeleting}
                 className="w-full sm:w-auto"
               >
-                {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...</> : 'I understand, delete this project'}
+                {isDeleting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...</> : 'I understand, delete this project'}
               </Button>
             </DialogFooter>
           </DialogContent>
