@@ -134,7 +134,7 @@ export default function NewProjectPage() {
         body: JSON.stringify(payload),
       });
 
-      router.push('/projects');
+      router.push(`/projects/${payload.slug}/edit`);
       router.refresh();
       toast.success('Project created successfully');
     } catch (err: any) {

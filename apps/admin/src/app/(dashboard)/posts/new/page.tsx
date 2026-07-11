@@ -105,7 +105,7 @@ export default function NewPostPage() {
         body: JSON.stringify(payload),
       });
 
-      router.push('/posts');
+      router.push(`/posts/${payload.slug}/edit`);
       router.refresh();
       toast.success('Post created successfully');
     } catch (err: any) {

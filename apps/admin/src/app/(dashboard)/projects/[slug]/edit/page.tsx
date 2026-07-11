@@ -210,8 +210,7 @@ export default function EditProjectPage() {
       await fetchApi(`/admin/projects/${projectSlug}`, { method: 'DELETE' });
       setDeleteDialogOpen(false);
       toast.success('Project deleted successfully');
-      router.push('/projects');
-      router.refresh();
+      window.location.href = '/projects';
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to delete project', { description: err.message });

@@ -177,8 +177,7 @@ export default function EditPostPage() {
       await fetchApi(`/admin/posts/${postSlug}`, { method: 'DELETE' });
       setDeleteDialogOpen(false);
       toast.success('Post deleted successfully');
-      router.push('/posts');
-      router.refresh();
+      window.location.href = '/posts';
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to delete post', { description: err.message });
