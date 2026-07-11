@@ -395,7 +395,13 @@ export default function EditPostPage() {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (deleteConfirmText === form.getValues('title') && !isDeleting) {
+                onDelete();
+              }
+            }}>
+              <DialogHeader>
               <DialogTitle>Are you absolutely sure?</DialogTitle>
               <DialogDescription>
                 This action cannot be undone. This will permanently delete the post
@@ -412,16 +418,17 @@ export default function EditPostPage() {
                 placeholder={form.getValues('title') || 'Post Title'}
               />
             </div>
-            <DialogFooter>
+              <DialogFooter>
               <Button 
+                type="submit"
                 variant="destructive" 
-                onClick={onDelete} 
                 disabled={deleteConfirmText !== form.getValues('title') || isDeleting}
                 className="w-full sm:w-auto"
               >
                 {isDeleting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...</> : 'I understand, delete this post'}
               </Button>
-            </DialogFooter>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
