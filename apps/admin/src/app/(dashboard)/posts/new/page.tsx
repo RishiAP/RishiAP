@@ -105,9 +105,8 @@ export default function NewPostPage() {
         body: JSON.stringify(payload),
       });
 
-      router.push(`/posts/${payload.slug}/edit`);
-      router.refresh();
       toast.success('Post created successfully');
+      window.location.href = `/posts/${payload.slug}/edit`;
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to create post', { description: err.message });

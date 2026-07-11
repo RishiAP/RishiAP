@@ -134,9 +134,8 @@ export default function NewProjectPage() {
         body: JSON.stringify(payload),
       });
 
-      router.push(`/projects/${payload.slug}/edit`);
-      router.refresh();
       toast.success('Project created successfully');
+      window.location.href = `/projects/${payload.slug}/edit`;
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to create project', { description: err.message });
