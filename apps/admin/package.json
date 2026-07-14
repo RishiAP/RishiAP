@@ -29,7 +29,7 @@
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.0",
-    "@rishiap/lexiform": "^0.4.12",
+    "@rishiap/lexiform": "^0.4.14",
     "@rishicodes/shared-types": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
