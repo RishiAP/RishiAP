@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { ProseCopyButtons } from '@/components/ui/prose-copy-buttons';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -91,9 +92,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* The rich text content rendered natively from HTML */}
         <article 
+          id="post-content"
           className="prose prose-invert prose-lg max-w-none prose-p:leading-relaxed prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
+        <ProseCopyButtons articleSelector="#post-content" />
       </div>
     </main>
   );

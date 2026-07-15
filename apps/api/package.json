@@ -20,7 +20,7 @@
     "@nestjs/swagger": "^11.0.0",
     "@nestjs/throttler": "^6.5.0",
     "@prisma/adapter-pg": "^7.8.0",
-    "@rishiap/lexiform": "^0.4.19",
+    "@rishiap/lexiform": "^0.4.20",
     "@rishicodes/db": "workspace:*",
     "@rishicodes/shared-types": "workspace:*",
     "cloudinary": "^2.10.0",
