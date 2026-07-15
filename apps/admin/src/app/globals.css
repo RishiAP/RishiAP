@@ -60,4 +60,16 @@ body {
   font-family: var(--font-sans);
 }
 
-
+/* ─── Fix: Radix ScrollArea internal table div width collapse ─────────────
+   Radix's ScrollArea.Viewport injects an inner div with display:table and
+   min-width:100%. When code block activates and Lexiform toolbar re-renders
+   with fewer items, this table collapses, compressing the page layout.
+   Locking it to width:100% / max-width:100% prevents any collapse.
+   ─────────────────────────────────────────────────────────────────────── */
+[data-radix-scroll-area-viewport] > div,
+[data-slot="scroll-area-viewport"] > div {
+  min-width: 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}

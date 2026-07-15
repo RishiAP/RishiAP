@@ -79,8 +79,8 @@ importers:
         specifier: ^1.1.0
         version: 1.2.10(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@rishiap/lexiform':
-        specifier: ^0.4.14
-        version: 0.4.14(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)
+        specifier: ^0.4.19
+        version: 0.4.19(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)
       '@rishicodes/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -200,8 +200,8 @@ importers:
         specifier: ^7.8.0
         version: 7.8.0
       '@rishiap/lexiform':
-        specifier: ^0.4.14
-        version: 0.4.14(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)
+        specifier: ^0.4.19
+        version: 0.4.19(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)
       '@rishicodes/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -2821,8 +2821,8 @@ packages:
   '@radix-ui/rect@1.1.2':
     resolution: {integrity: sha512-xnXE7wG13PI+cxieVssYXlQJuYVRhH9NBoxt3KNwzghDIA69GMm7d4wXRouHIYjE+KvS6U/MsMO73NdS2MH9ZA==}
 
-  '@rishiap/lexiform@0.4.14':
-    resolution: {integrity: sha512-Nb7BDiqll9GtyvSahpDMLJ2EExrDSAw6yxYpYfOOrHYVgLM+XNb5FiaIvxAz2SWBH4vQeyA/AjA3MfooK3sAIg==}
+  '@rishiap/lexiform@0.4.19':
+    resolution: {integrity: sha512-rw2aZvPWsNAjP7SZ9RkISfg/6Fm/2NW/nHyeHdyQpOQzrLLCceC/iNgogb1NDJPmjm1+Xb2D1fWcMeTzErvO6g==}
     peerDependencies:
       '@excalidraw/excalidraw': '*'
       katex: '*'
@@ -9964,7 +9964,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.2': {}
 
-  '@rishiap/lexiform@0.4.14(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)':
+  '@rishiap/lexiform@0.4.19(@excalidraw/excalidraw@0.18.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(katex@0.17.0)(mathlive@0.110.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yjs@13.6.31)':
     dependencies:
       '@lexical/clipboard': 0.45.0
       '@lexical/code': 0.45.0

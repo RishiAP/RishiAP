@@ -20,7 +20,7 @@ export default function DashboardLayout({
         </header>
         <ScrollArea id="main-scroll" className="flex-1 min-h-0">
           <ScrollReset />
-          <div className="grid grid-cols-1 gap-4 p-3 md:gap-6 md:p-6">
+          <div className="grid grid-cols-1 gap-4 p-3 md:gap-6 md:p-6 *:min-w-0">
             {children}
           </div>
         </ScrollArea>

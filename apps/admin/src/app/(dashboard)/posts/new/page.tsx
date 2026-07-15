@@ -116,7 +116,7 @@ export default function NewPostPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl w-full mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Create Post</h1>
         <p className="text-muted-foreground mt-2">
@@ -220,7 +220,7 @@ export default function NewPostPage() {
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <div className="border rounded-xl shadow-sm bg-card overflow-hidden">
+                  <div className="border rounded-xl shadow-sm bg-card overflow-hidden min-w-0 w-full">
                     <LexicalEditor
                       value={typeof field.value === 'string' && field.value.trim() !== '' ? field.value : undefined}
                       onChange={(val) => field.onChange(val)}
