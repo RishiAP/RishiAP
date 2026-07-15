@@ -36,7 +36,7 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
             {item}
             <button
               type="button"
-              className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();

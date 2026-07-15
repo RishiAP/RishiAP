@@ -143,7 +143,7 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
         },
         stack: {
           core: primarySkills.length > 0 ? primarySkills : ["TypeScript", "Node.js", "PostgreSQL"],
-          recent: allSkills.slice(-5).map((s: Skill) => s.name)
+          recent: allSkills.slice(-3).map((s: Skill) => s.name)
         },
         status: "Available for new opportunities",
         fetchedAt: timestamp

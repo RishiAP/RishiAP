@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   },
 };
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default async function Skills() {
   const skillsCategories = await getSkills().catch(() => []);
@@ -61,10 +62,16 @@ export default async function Skills() {
     skillsCategories.flatMap((c: SkillCategory) => c.skills.map((s: Skill) => s.field))
   )).filter(Boolean).sort();
 
+  const allDeps = Object.entries(dynamicDependencies);
+  const truncatedDeps = Object.fromEntries(allDeps.slice(0, 8));
+  if (allDeps.length > 8) {
+    truncatedDeps[`... ${allDeps.length - 8} more`] = "omitted";
+  }
+
   const packageJson = {
     name: "@rishi/stack",
     version: "1.0.0",
-    dependencies: Object.keys(dynamicDependencies).length > 0 ? dynamicDependencies : {
+    dependencies: Object.keys(truncatedDeps).length > 0 ? truncatedDeps : {
       "@nestjs/core": "^10.0.0",
       "react": "^18.2.0"
     }
@@ -140,41 +147,34 @@ export default async function Skills() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
-        <div className="mb-6">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Configuration</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">
-            <span className="text-zinc-500">// package.json</span>
-            <pre 
-              className="mt-2 text-xs overflow-x-auto"
-              dangerouslySetInnerHTML={{ __html: highlightedPackageJson }}
-            />
+      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
+        <div className="flex flex-col gap-8 p-6 lg:p-8">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Configuration</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
+              <span className="text-zinc-500">// package.json</span>
+              <pre 
+                className="mt-2 text-xs overflow-x-auto"
+                dangerouslySetInnerHTML={{ __html: highlightedPackageJson }}
+              />
+            </div>
           </div>
-        </div>
 
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Infrastructure</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300 overflow-x-auto">
-             <span className="text-zinc-500"># docker-compose.yml</span>
-            <pre className="mt-2 text-xs">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Infrastructure</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
+               <span className="text-zinc-500"># docker-compose.yml</span>
+              <pre className="mt-2 text-xs">
 {`services:
   db:
     image: postgres:15-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      
   redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-`}
-            </pre>
+    image: redis:7-alpine`}
+              </pre>
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollArea>
       </div>
     </TooltipProvider>
   );

@@ -57,7 +57,7 @@ export function Navbar() {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <button
-                className="text-xl text-green-400 focus:outline-none hover:text-cyan-400 transition-colors"
+                className="text-xl text-green-400 focus:outline-none hover:text-cyan-400 transition-colors cursor-pointer"
                 aria-label="Open menu"
               >
                 <FaBars />

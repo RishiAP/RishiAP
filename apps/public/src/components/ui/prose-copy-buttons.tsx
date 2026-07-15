@@ -17,7 +17,7 @@ function CopyButton({ preEl }: { preEl: HTMLPreElement }) {
   return (
     <button
       onClick={handleCopy}
-      className="absolute right-2 top-2 z-10 flex items-center gap-1.5 rounded-md border border-zinc-600 bg-zinc-800/90 p-1.5 sm:px-2 sm:py-1.5 text-xs text-zinc-400 transition-all hover:border-zinc-500 hover:bg-zinc-700 hover:text-zinc-200 backdrop-blur-sm"
+      className="absolute right-2 top-2 z-10 flex items-center gap-1.5 rounded-md border border-zinc-600 bg-zinc-800/90 p-1.5 sm:px-2 sm:py-1.5 text-xs text-zinc-400 transition-all hover:border-zinc-500 hover:bg-zinc-700 hover:text-zinc-200 backdrop-blur-sm cursor-pointer"
       aria-label="Copy code"
     >
       {copied ? (

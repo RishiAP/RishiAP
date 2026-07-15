@@ -10,6 +10,7 @@ import { ProjectResponse } from '@rishicodes/shared-types';
 import { ExternalLink, GitBranch, Package, Cpu, FlaskConical, Wrench, AppWindow } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const categoryIcons: Record<string, React.ReactNode> = {
   CASE_STUDY: null,
@@ -186,19 +187,20 @@ export default async function Projects() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
-        <div className="mb-6">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Request</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">
-            <span className="text-indigo-400 font-bold">GET</span> /api/v1/projects?sort=tier
+      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
+        <div className="flex flex-col gap-8 p-6 lg:p-8">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
+              <span className="text-indigo-400 font-bold">GET</span> /api/v1/projects?sort=tier
+            </div>
           </div>
-        </div>
 
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Response</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300 overflow-x-auto">
-            <pre>
-{JSON.stringify(projects.slice(0, 3).map((p: ProjectResponse) => ({
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
+              <pre>
+{JSON.stringify(projects.slice(0, 2).map((p: ProjectResponse) => ({
   id: p.id,
   title: p.title,
   category: p.category,
@@ -206,13 +208,14 @@ export default async function Projects() {
   techStack: p.techStack,
   languages: p.languages
 })), null, 2)}
-            </pre>
+              </pre>
+            </div>
+            {projects.length > 2 && (
+              <div className="text-[10px] text-zinc-500 mt-3 font-mono uppercase tracking-wider">... {projects.length - 2} more items omitted</div>
+            )}
           </div>
-          {projects.length > 3 && (
-            <div className="text-xs text-zinc-500 mt-2 ml-4">... {projects.length - 3} more items omitted</div>
-          )}
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 }

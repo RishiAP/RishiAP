@@ -4,8 +4,10 @@ import { GitBranch, ExternalLink, Star, GitFork, Package, ArrowLeft } from 'luci
 import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { formatDate } from '@/lib/utils';
 import { MarkdownRenderer } from '@/components/ui/markdown-renderer';
+import { CopyPackageInfo } from '@/components/ui/copy-package-info';
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -116,48 +118,48 @@ export default async function ProjectDetailPage({
   );
 
 
+  let packageCommand = project.packageName;
+  if (project.packageRegistry === 'npm') packageCommand = `npm install ${project.packageName}`;
+  else if (project.packageRegistry === 'pypi') packageCommand = `pip install ${project.packageName}`;
+  else if (project.packageRegistry === 'maven') packageCommand = `<dependency>${project.packageName}</dependency>`;
+
+  const packageInfoContent = isPackageOrLibrary && project.packageName && (
+    <div className="mt-6 space-y-4">
+      <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Package Info</div>
+      <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 space-y-2">
+        <div className="text-sm text-zinc-300 font-mono">{project.packageName}</div>
+        {project.packageRegistry && (
+          <div className="text-xs text-zinc-500">
+            Registry: <span className="text-zinc-400">{project.packageRegistry}</span>
+          </div>
+        )}
+        <CopyPackageInfo text={packageCommand} />
+      </div>
+    </div>
+  );
+
+  const mobilePackageInfoContent = isPackageOrLibrary && project.packageName && (
+    <div className="pt-4 mt-4 border-t border-zinc-800/50">
+      <div className="text-xs text-zinc-500 mb-2">Install Package</div>
+      <CopyPackageInfo text={packageCommand} />
+    </div>
+  );
+
   const sidebarContent = (
     <>
-      <div className="mb-6">
-        <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Request</div>
-        <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">
+      <div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
+        <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
           <span className="text-indigo-400 font-bold">GET</span> /api/v1/projects/{slug}
         </div>
       </div>
 
       {githubStatsContent}
+      {packageInfoContent}
 
-      {isPackageOrLibrary && project.packageName && (
-        <div className="mt-6 space-y-4">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Package Info</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 space-y-2">
-            <div className="text-sm text-zinc-300 font-mono">{project.packageName}</div>
-            {project.packageRegistry && (
-              <div className="text-xs text-zinc-500">
-                Registry: <span className="text-zinc-400">{project.packageRegistry}</span>
-              </div>
-            )}
-            <div className="mt-3 bg-zinc-900 rounded p-3 font-mono text-sm text-zinc-300">
-              {project.packageRegistry === 'npm' && (
-                <span>npm install {project.packageName}</span>
-              )}
-              {project.packageRegistry === 'pypi' && (
-                <span>pip install {project.packageName}</span>
-              )}
-              {project.packageRegistry === 'maven' && (
-                <span>&lt;dependency&gt;{project.packageName}&lt;/dependency&gt;</span>
-              )}
-              {!['npm', 'pypi', 'maven'].includes(project.packageRegistry ?? '') && (
-                <span>{project.packageName}</span>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="mt-6">
-        <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Response</div>
-        <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300 overflow-x-auto">
+      <div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
+        <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
           <pre>
 {JSON.stringify({
   id: project.id,
@@ -246,12 +248,14 @@ export default async function ProjectDetailPage({
           )}
         </div>
 
-        {/* Mobile GitHub Details (Inline) */}
-        {githubMeta && (
+        {/* Mobile GitHub Details & Package Info (Inline) */}
+        {(githubMeta || packageInfoContent) && (
           <div className="xl:hidden mb-10 space-y-4">
-            {githubMeta.languages && githubMeta.languages.length > 0 && (
-              <div className="bg-zinc-900/40 rounded-lg p-4 border border-zinc-800/50 max-w-sm">
-                <div className="flex h-1.5 w-full rounded-full overflow-hidden mb-3">
+            {githubMeta && (
+              <>
+                {githubMeta.languages && githubMeta.languages.length > 0 && (
+                  <div className="bg-zinc-900/40 rounded-lg p-4 border border-zinc-800/50 max-w-sm">
+                    <div className="flex h-1.5 w-full rounded-full overflow-hidden mb-3">
                   {githubMeta.languages.map((l: { name: string; percentage: number }, i: number) => {
                     const colors = ['bg-indigo-500', 'bg-emerald-500', 'bg-amber-500', 'bg-rose-500', 'bg-cyan-500', 'bg-purple-500', 'bg-pink-500'];
                     const color = colors[i % colors.length];
@@ -293,6 +297,10 @@ export default async function ProjectDetailPage({
                 </a>
               </div>
             </div>
+            </>
+            )}
+            
+            {mobilePackageInfoContent}
           </div>
         )}
 
@@ -356,7 +364,7 @@ export default async function ProjectDetailPage({
                 <h2 className="text-lg font-semibold text-zinc-200 mb-4 font-mono">
                   <span className="text-indigo-400">README.md</span>
                 </h2>
-                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 [&_a:hover]:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
                   <MarkdownRenderer content={readme} />
                 </div>
               </>
@@ -366,7 +374,7 @@ export default async function ProjectDetailPage({
                   <span className="text-indigo-400 mr-2">▸</span>
                   README.md
                 </summary>
-                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 [&_a:hover]:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
                   <MarkdownRenderer content={readme} />
                 </div>
               </details>
@@ -376,9 +384,11 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Right Pane — GitHub Stats */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100dvh-7.5rem)] overflow-y-auto">
-        {sidebarContent}
-      </div>
+      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
+        <div className="flex flex-col gap-6 p-6 lg:p-8">
+          {sidebarContent}
+        </div>
+      </ScrollArea>
     </div>
   );
 }

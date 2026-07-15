@@ -25,18 +25,18 @@ export function IDEShell({ children }: { children: React.ReactNode }) {
       <div className="w-12 bg-[var(--color-ide-activity-bar)] flex flex-col items-center py-4 border-r border-[var(--color-ide-panel-border)] z-20">
         <div className="flex flex-col gap-6 w-full items-center">
           <button 
-            className={`relative group ${isExplorerOpen ? 'text-white' : 'text-[#858585] hover:text-white transition-colors'}`}
+            className={`relative group ${isExplorerOpen ? 'text-white' : 'text-[#858585] hover:text-white transition-colors'} cursor-pointer`}
             onClick={() => setIsExplorerOpen(!isExplorerOpen)}
           >
             <Files className="w-6 h-6 stroke-1" />
             {isExplorerOpen && <div className="absolute left-[-16px] top-0 bottom-0 w-0.5 bg-[#007acc]"></div>}
           </button>
-          <button className="text-[#858585] hover:text-white transition-colors"><Search className="w-6 h-6 stroke-1" /></button>
-          <button className="text-[#858585] hover:text-white transition-colors"><GitBranch className="w-6 h-6 stroke-1" /></button>
-          <button className="text-[#858585] hover:text-white transition-colors"><MonitorPlay className="w-6 h-6 stroke-1" /></button>
+          <button className="text-[#858585] hover:text-white transition-colors cursor-pointer"><Search className="w-6 h-6 stroke-1" /></button>
+          <button className="text-[#858585] hover:text-white transition-colors cursor-pointer"><GitBranch className="w-6 h-6 stroke-1" /></button>
+          <button className="text-[#858585] hover:text-white transition-colors cursor-pointer"><MonitorPlay className="w-6 h-6 stroke-1" /></button>
         </div>
         <div className="mt-auto pb-6">
-          <button className="text-[#858585] hover:text-white transition-colors"><Settings className="w-6 h-6 stroke-1" /></button>
+          <button className="text-[#858585] hover:text-white transition-colors cursor-pointer"><Settings className="w-6 h-6 stroke-1" /></button>
         </div>
       </div>
 

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 };
 import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 export default async function BlogIndexPage() {
   const posts = await getPosts().catch(() => []);
 
@@ -66,31 +67,33 @@ export default async function BlogIndexPage() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="bg-zinc-900 border-l border-zinc-800 p-6 hidden xl:block sticky top-0 max-h-[calc(100vh-7.5rem)] overflow-y-auto">
-        <div className="mb-6">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Request</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300">
-            <span className="text-indigo-400 font-bold">GET</span> /api/v1/posts?status=published
+      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
+        <div className="flex flex-col gap-8 p-6 lg:p-8">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
+              <span className="text-indigo-400 font-bold">GET</span> /api/v1/posts?status=published
+            </div>
           </div>
-        </div>
 
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Response</div>
-          <div className="bg-zinc-950 rounded-md p-4 border border-zinc-800 font-mono text-sm text-zinc-300 overflow-x-auto">
-            <pre>
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
+            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
+              <pre>
 {JSON.stringify(posts.slice(0, 2).map((p: import("@rishicodes/shared-types").PostResponse) => ({
   id: p.id,
   title: p.title,
   slug: p.slug,
   publishedAt: p.publishedAt
 })), null, 2)}
-            </pre>
+              </pre>
+            </div>
+            {posts.length > 2 && (
+              <div className="text-[10px] text-zinc-500 mt-3 font-mono uppercase tracking-wider">... {posts.length - 2} more items omitted</div>
+            )}
           </div>
-          {posts.length > 2 && (
-            <div className="text-xs text-zinc-500 mt-2 ml-4">... {posts.length - 2} more items omitted</div>
-          )}
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 }
