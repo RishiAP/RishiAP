@@ -356,7 +356,7 @@ export default async function ProjectDetailPage({
                 <h2 className="text-lg font-semibold text-zinc-200 mb-4 font-mono">
                   <span className="text-indigo-400">README.md</span>
                 </h2>
-                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-lg [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
                   <MarkdownRenderer content={readme} />
                 </div>
               </>
@@ -366,7 +366,7 @@ export default async function ProjectDetailPage({
                   <span className="text-indigo-400 mr-2">▸</span>
                   README.md
                 </summary>
-                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:rounded-lg [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
+                <div className="mt-4 bg-zinc-900 rounded-lg border border-zinc-800 p-4 sm:p-6 prose prose-invert prose-zinc max-w-none prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-a:text-indigo-400 hover:prose-a:text-indigo-300 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-zinc-200 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none prose-img:inline-block prose-img:m-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-inherit [&_pre_code]:text-[inherit] [&_pre_code]:rounded-none">
                   <MarkdownRenderer content={readme} />
                 </div>
               </details>
