@@ -147,8 +147,10 @@ export default async function Skills() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
-        <div className="flex flex-col gap-8 p-6 lg:p-8">
+      <div className="hidden xl:block sticky top-8 self-start w-full">
+        <ScrollArea className="h-[calc(100vh-8rem)] w-full">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl h-fit">
+            <div className="flex flex-col gap-8 p-6 lg:p-8">
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Configuration</div>
             <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
@@ -174,7 +176,9 @@ export default async function Skills() {
             </div>
           </div>
         </div>
-      </ScrollArea>
+          </div>
+        </ScrollArea>
+      </div>
       </div>
     </TooltipProvider>
   );

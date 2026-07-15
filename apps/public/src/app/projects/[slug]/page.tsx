@@ -384,11 +384,15 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Right Pane — GitHub Stats */}
-      <ScrollArea className="hidden xl:block sticky top-0 h-[calc(100vh-7.5rem)] bg-zinc-900 border-l border-zinc-800">
-        <div className="flex flex-col gap-6 p-6 lg:p-8">
+      <div className="hidden xl:block sticky top-8 self-start w-full">
+        <ScrollArea className="h-[calc(100vh-8rem)] w-full">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl h-fit">
+            <div className="flex flex-col gap-6 p-6 lg:p-8">
           {sidebarContent}
-        </div>
-      </ScrollArea>
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 }
