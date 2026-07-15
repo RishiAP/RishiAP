@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   },
 };
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default async function Skills() {
   const skillsCategories = await getSkills().catch(() => []);
@@ -147,37 +146,35 @@ export default async function Skills() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="hidden xl:block sticky top-8 self-start w-full">
-        <ScrollArea className="h-[calc(100vh-8rem)] w-full">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl h-fit">
-            <div className="flex flex-col gap-8 p-6 lg:p-8">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Configuration</div>
-            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
-              <span className="text-zinc-500">// package.json</span>
-              <pre 
-                className="mt-2 text-xs overflow-x-auto"
-                dangerouslySetInnerHTML={{ __html: highlightedPackageJson }}
-              />
+      <div className="hidden xl:flex flex-col sticky top-8 self-start w-full bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl max-h-[calc(100vh-8rem)]">
+        <div className="overflow-y-auto flex-1 custom-scrollbar">
+          <div className="flex flex-col gap-8 p-6 lg:p-8">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Configuration</div>
+              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-[13px] leading-relaxed text-zinc-300">
+                <span className="text-zinc-500">// package.json</span>
+                <pre 
+                  className="mt-2 overflow-x-auto"
+                  dangerouslySetInnerHTML={{ __html: highlightedPackageJson }}
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Infrastructure</div>
-            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
-               <span className="text-zinc-500"># docker-compose.yml</span>
-              <pre className="mt-2 text-xs">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Infrastructure</div>
+              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto">
+                 <span className="text-zinc-500"># docker-compose.yml</span>
+                <pre className="mt-2 text-indigo-300">
 {`services:
   db:
     image: postgres:15-alpine
   redis:
     image: redis:7-alpine`}
-              </pre>
+                </pre>
+              </div>
             </div>
           </div>
         </div>
-          </div>
-        </ScrollArea>
       </div>
       </div>
     </TooltipProvider>

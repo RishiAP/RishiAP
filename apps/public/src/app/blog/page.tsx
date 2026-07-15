@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { highlightJson } from '@/lib/highlight';
 export default async function BlogIndexPage() {
   const posts = await getPosts().catch(() => []);
 
@@ -67,36 +67,34 @@ export default async function BlogIndexPage() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="hidden xl:block sticky top-8 self-start w-full">
-        <ScrollArea className="h-[calc(100vh-8rem)] w-full">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl h-fit">
-            <div className="flex flex-col gap-8 p-6 lg:p-8">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
-            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
-              <span className="text-indigo-400 font-bold">GET</span> /api/v1/posts?status=published
+      <div className="hidden xl:flex flex-col sticky top-8 self-start w-full bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl max-h-[calc(100vh-8rem)]">
+        <div className="overflow-y-auto flex-1">
+          <div className="flex flex-col gap-8 p-6 lg:p-8">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
+              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300">
+                <span className="text-indigo-400 font-bold">GET</span> /api/v1/posts?status=published
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
-            <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-sm text-zinc-300 overflow-x-auto">
-              <pre>
-{JSON.stringify(posts.slice(0, 2).map((p: import("@rishicodes/shared-types").PostResponse) => ({
-  id: p.id,
-  title: p.title,
-  slug: p.slug,
-  publishedAt: p.publishedAt
-})), null, 2)}
-              </pre>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
+              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto">
+                <pre dangerouslySetInnerHTML={{
+                  __html: highlightJson(posts.slice(0, 2).map((p: import("@rishicodes/shared-types").PostResponse) => ({
+                    id: p.id,
+                    title: p.title,
+                    slug: p.slug,
+                    publishedAt: p.publishedAt
+                  })))
+                }} />
+              </div>
+              {posts.length > 2 && (
+                <div className="text-[10px] text-zinc-500 mt-3 font-mono uppercase tracking-wider">... {posts.length - 2} more items omitted</div>
+              )}
             </div>
-            {posts.length > 2 && (
-              <div className="text-[10px] text-zinc-500 mt-3 font-mono uppercase tracking-wider">... {posts.length - 2} more items omitted</div>
-            )}
           </div>
         </div>
-          </div>
-        </ScrollArea>
       </div>
     </div>
   );

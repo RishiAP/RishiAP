@@ -324,39 +324,40 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
       </div>
 
       {/* Right Code Snippet Pane (Sticky) */}
-      <div className="bg-zinc-900/80 backdrop-blur-xl border-l border-zinc-800/80 p-8 hidden xl:flex flex-col sticky top-0 h-screen transition-colors duration-500">
-        <div className="mb-8">
-          <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3 flex items-center justify-between">
-            <span>Request</span>
-            <span className={`h-2 w-2 rounded-full animate-pulse ${hoveredItem.type !== 'profile' ? 'bg-indigo-500/50' : 'bg-emerald-500/50'}`} />
-          </div>
-          <div className="bg-zinc-950/80 rounded-xl p-4 border border-zinc-800/80 font-mono text-sm text-zinc-300 shadow-inner overflow-hidden text-ellipsis whitespace-nowrap">
-            <span className={`${hoveredItem.type !== 'profile' ? 'text-emerald-400' : 'text-indigo-400'} font-bold mr-3 transition-colors`}>GET</span> 
-            {activeData.endpoint.replace('GET ', '')}
-          </div>
-        </div>
+      <div className="hidden xl:flex flex-col sticky top-8 self-start w-full bg-zinc-900/80 backdrop-blur-xl border border-zinc-800/80 rounded-xl overflow-hidden shadow-xl max-h-[calc(100vh-8rem)] transition-colors duration-500">
+        <div className="overflow-y-auto flex-1 custom-scrollbar">
+          <div className="p-6 lg:p-8 flex flex-col relative">
+            <div className="mb-8">
+              <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3 flex items-center justify-between">
+                <span>Request</span>
+                <span className={`h-2 w-2 rounded-full animate-pulse ${hoveredItem.type !== 'profile' ? 'bg-indigo-500/50' : 'bg-emerald-500/50'}`} />
+              </div>
+              <div className="bg-zinc-950/80 rounded-xl p-4 border border-zinc-800/80 font-mono text-sm text-zinc-300 shadow-inner overflow-hidden text-ellipsis whitespace-nowrap">
+                <span className={`${hoveredItem.type !== 'profile' ? 'text-emerald-400' : 'text-indigo-400'} font-bold mr-3 transition-colors`}>GET</span> 
+                {activeData.endpoint.replace('GET ', '')}
+              </div>
+            </div>
 
-        <div>
-          <div className="flex justify-between items-end mb-3">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Response</div>
-            <div className="text-xs font-mono text-emerald-400 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              200 OK • {displayTime}ms
+            <div>
+              <div className="flex justify-between items-end mb-3">
+                <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Response</div>
+                <div className="text-xs font-mono text-emerald-400 flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  200 OK • {displayTime}ms
+                </div>
+              </div>
+              <div className="relative">
+                {/* Glow effect behind the JSON block */}
+                <div className={`absolute -inset-1 blur-xl opacity-50 transition-colors duration-500 ${hoveredItem.type === 'project' ? 'bg-gradient-to-r from-blue-500/10 to-indigo-500/10' : hoveredItem.type === 'post' ? 'bg-gradient-to-r from-emerald-500/10 to-teal-500/10' : 'bg-gradient-to-r from-indigo-500/10 to-emerald-500/10'}`} />
+                
+                <pre 
+                  className="relative bg-zinc-950 rounded-xl p-6 border border-zinc-800/80 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto shadow-2xl transition-all"
+                  dangerouslySetInnerHTML={{ __html: highlightedJson }}
+                />
+              </div>
             </div>
           </div>
-          <div className="relative">
-            {/* Glow effect behind the JSON block */}
-            <div className={`absolute -inset-1 blur-xl opacity-50 transition-colors duration-500 ${hoveredItem.type === 'project' ? 'bg-gradient-to-r from-blue-500/10 to-indigo-500/10' : hoveredItem.type === 'post' ? 'bg-gradient-to-r from-emerald-500/10 to-teal-500/10' : 'bg-gradient-to-r from-indigo-500/10 to-emerald-500/10'}`} />
-            
-            <pre 
-              className="relative bg-zinc-950 rounded-xl p-6 border border-zinc-800/80 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto shadow-2xl transition-all"
-              dangerouslySetInnerHTML={{ __html: highlightedJson }}
-            />
-          </div>
         </div>
-        
-        {/* Decorative Grid at bottom of sidebar */}
-        <div className="mt-12 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,1) 1px, transparent 0)', backgroundSize: '16px 16px', height: '200px' }} />
       </div>
     </div>
   );
