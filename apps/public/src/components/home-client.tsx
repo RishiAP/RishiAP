@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Briefcase, FileText, FolderKanban, Mail, Link as LinkIcon } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDate, formatMonthYear } from '@/lib/utils';
 import type { Skill, SkillCategory } from '@/lib/api';
 import type { 
@@ -324,9 +325,9 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
       </div>
 
       {/* Right Code Snippet Pane (Sticky) */}
-      <div className="hidden xl:flex flex-col sticky top-8 self-start w-full bg-zinc-900/80 backdrop-blur-xl border border-zinc-800/80 rounded-xl overflow-hidden shadow-xl max-h-[calc(100vh-8rem)] transition-colors duration-500">
-        <div className="overflow-y-auto flex-1 custom-scrollbar">
-          <div className="p-6 lg:p-8 flex flex-col relative">
+      <div className="hidden xl:block sticky top-8 self-start w-full">
+        <ScrollArea className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800/80 rounded-xl overflow-hidden shadow-xl w-full max-h-[calc(100vh-8rem)] [&>[data-slot=scroll-area-viewport]]:max-h-[calc(100vh-8rem)] transition-colors duration-500 relative">
+          <div className="p-6 lg:p-8 flex flex-col relative h-fit">
             <div className="mb-8">
               <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3 flex items-center justify-between">
                 <span>Request</span>
@@ -351,13 +352,13 @@ export function HomeClient({ experience, projects, posts, skills, socialLinks, f
                 <div className={`absolute -inset-1 blur-xl opacity-50 transition-colors duration-500 ${hoveredItem.type === 'project' ? 'bg-gradient-to-r from-blue-500/10 to-indigo-500/10' : hoveredItem.type === 'post' ? 'bg-gradient-to-r from-emerald-500/10 to-teal-500/10' : 'bg-gradient-to-r from-indigo-500/10 to-emerald-500/10'}`} />
                 
                 <pre 
-                  className="relative bg-zinc-950 rounded-xl p-6 border border-zinc-800/80 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto shadow-2xl transition-all"
+                  className="relative bg-zinc-950 rounded-xl p-6 border border-zinc-800/80 font-mono text-[13px] leading-relaxed text-zinc-300 shadow-2xl transition-all whitespace-pre-wrap break-words"
                   dangerouslySetInnerHTML={{ __html: highlightedJson }}
                 />
               </div>
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import { ProjectResponse } from '@rishicodes/shared-types';
 import { ExternalLink, GitBranch, Package, Cpu, FlaskConical, Wrench, AppWindow } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import Link from 'next/link';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { highlightJson } from '@/lib/highlight';
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -187,8 +188,8 @@ export default async function Projects() {
       </div>
 
       {/* Right Code Snippet Pane */}
-      <div className="hidden xl:flex flex-col sticky top-8 self-start w-full bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl max-h-[calc(100vh-8rem)]">
-        <div className="overflow-y-auto flex-1 custom-scrollbar">
+      <div className="hidden xl:block sticky top-8 self-start w-full">
+        <ScrollArea className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-xl w-full max-h-[calc(100vh-8rem)] [&>[data-slot=scroll-area-viewport]]:max-h-[calc(100vh-8rem)]">
           <div className="flex flex-col gap-8 p-6 lg:p-8">
             <div>
               <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Request</div>
@@ -199,8 +200,8 @@ export default async function Projects() {
 
             <div>
               <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Response</div>
-              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-[13px] leading-relaxed text-zinc-300 overflow-x-auto">
-                <pre dangerouslySetInnerHTML={{
+              <div className="bg-zinc-950 rounded-lg p-4 border border-zinc-800/50 font-mono text-[13px] leading-relaxed text-zinc-300">
+                <pre className="whitespace-pre-wrap break-words" dangerouslySetInnerHTML={{
                   __html: highlightJson(projects.slice(0, 2).map((p: ProjectResponse) => ({
                     id: p.id,
                     title: p.title,
@@ -216,7 +217,7 @@ export default async function Projects() {
               )}
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
